@@ -5,10 +5,10 @@ import io from 'Socket.IO-client'
 let socket;
 export default function Play(props){
     const [players,setplayers]=useState([])
-    const [cards,setcards]=useState([])
+
     const [connectedroom,setconnectedroom]=useState(false)
-    const router=useRouter()
-    const player=props["player"]
+
+
     const [id,setid]=useState('')
     const socketInitializer = async () => {
         await fetch('/api/socket');
@@ -23,7 +23,7 @@ export default function Play(props){
         socket.on('jarya',(res)=>{
             setplayers(res)
         })
-        
+       
       }
     useEffect(() => {socketInitializer()}, [])
     if (connectedroom){
