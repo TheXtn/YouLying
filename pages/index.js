@@ -33,9 +33,13 @@ const Home = () => {
     
     <div>
     <div className={styles.loginform}>
-      <p>Nickname:</p>
-            <p><input value={id} onChange={(e)=>setid(e.target.value)} /></p>
-            <Link href={`/play/${encodeURIComponent(id)}`}><button >Play !</button></Link><br/>
+      <p>Select a room:</p>
+      <p><select value={id} onChange={(e)=>setid(e.target.value)}>
+          <option value=""></option>
+          <option value="LocalRoom">Local room</option>
+      </select></p>
+      <Link href={`/play/${encodeURIComponent(id)}`}><button >Play !</button></Link><br/>
+
       {messages.map((item)=>{
         return(
           <p key={item}>{item}</p>

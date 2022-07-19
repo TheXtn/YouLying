@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import Image from 'next/image'
 import io from 'Socket.IO-client'
 let socket;
 
@@ -107,12 +108,13 @@ export default function Play(props) {
             </div>
         )
     }
-    console.log(socket)
     return (
         <div>
-
-            <button onClick={() => { socket.emit('addplayer', props.player); setconnectedroom(true) }}>Play !</button>
-
+            <div>
+                <p>Nickname:</p>
+                <p><input value={id} onChange={(e)=>setid(e.target.value)} /></p>
+                <button onClick={() => { socket.emit('addplayer', id); setconnectedroom(true) }}>play</button>
+            </div>
         </div>
     )
 
