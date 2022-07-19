@@ -39,6 +39,8 @@ export default function Play(props) {
         socket.on('yourTurn', () => {
             setcanPlay(true)
         })
+        
+       
     }
     function playTurn(card_id) {
         socket.emit('play-turn', card_id)

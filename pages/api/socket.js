@@ -53,7 +53,7 @@ const cards = [
   { id: 51, suit: 'diamonds', value: '12' },
   { id: 52, suit: 'diamonds', value: '13' },
 ];
-const connectedPlayers = []
+var connectedPlayers = []
 function getRandomCard() {
   const randomCard = cards[Math.floor(Math.random() * cards.length)];
   cards.splice(cards.indexOf(randomCard), 1);
@@ -183,7 +183,8 @@ const SocketHandler = (req, res) => {
       socket.on('disconnect', () => {
         console.log(socket.id + " disconnected")
         //delete player from connected players
-        connectedPlayers = connectedPlayers.splice(connectedPlayers.findIndex(player => player.player_id === socket.id), 1)
+        connectedPlayers = connectedPlayers.filter(player => player.player_id !== socket.id)
+        socket.broadcast.emit('update-player', connectedPlayers)
         console.log('user disconnected');
       });
     })
