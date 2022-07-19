@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import io from 'Socket.IO-client'
 let socket;
+
 export default function Play(props) {
     const [taksir, setTaksir] = useState([]);
     const [players, setplayers] = useState([])
@@ -106,12 +107,11 @@ export default function Play(props) {
             </div>
         )
     }
+    console.log(socket)
     return (
-        <div >
+        <div>
 
-            <p>Nickname:</p>
-            <p><input value={id} onChange={(e) => setid(e.target.value)} /></p>
-            <button onClick={() => { socket.emit('addplayer', id); setconnectedroom(true) }}>Play !</button>
+            <button onClick={() => { socket.emit('addplayer', props.player); setconnectedroom(true) }}>Play !</button>
 
         </div>
     )

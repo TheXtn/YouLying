@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import io from 'Socket.IO-client'
 let socket;
 
+
 const Home = () => {
+  const [id, setid] = useState('')
   const [messages,setmessages]=useState([])
   const [input, setInput] = useState('')
   useEffect(() => {socketInitializer()}, [])
@@ -23,9 +26,13 @@ const Home = () => {
     setInput(e.target.value)
     socket.emit('input-change', input)
   }
-
+  
   return (
+    
     <div>
+      <p>Nickname:</p>
+            <p><input value={id} onChange={(e)=>setid(e.target.value)} /></p>
+            <Link href={`/play/${encodeURIComponent(id)}`}><button >Play !</button></Link><br/>
       {messages.map((item)=>{
         return(
           <p key={item}>{item}</p>
