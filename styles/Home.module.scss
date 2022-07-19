@@ -126,6 +126,13 @@ $fa-font-path: "../webfonts";
   font-size: x-large;
 }
 
+.PlayBG{
+  background-image: url('/public/playingTable.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

@@ -2,6 +2,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from 'next/image'
+import styles from '../../styles/Home.module.scss'
 import io from 'Socket.IO-client'
 let socket;
 
@@ -64,7 +65,7 @@ export default function Play(props) {
     useEffect(() => { socketInitializer() }, [])
     if (connectedroom) {
         return (
-            <div >
+            <div className={styles.PlayBG}>
                 <div style={{float: 'right'}}>
                     <h1>Table</h1>
                     {table.map((item)=>{
