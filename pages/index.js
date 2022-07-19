@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import io from 'Socket.IO-client'
+import styles from '../styles/Home.module.scss'
+
 let socket;
 
 
@@ -30,6 +32,7 @@ const Home = () => {
   return (
     
     <div>
+    <div className={styles.loginform}>
       <p>Nickname:</p>
             <p><input value={id} onChange={(e)=>setid(e.target.value)} /></p>
             <Link href={`/play/${encodeURIComponent(id)}`}><button >Play !</button></Link><br/>
@@ -39,6 +42,8 @@ const Home = () => {
         )
        
       })}
+      </div>
+      <div className={styles.chatbox}>
     <input
       type={"text"}
       placeholder="Type something"
@@ -46,6 +51,7 @@ const Home = () => {
       onChange={(e)=>{setInput(e.target.value)}}
     />
     <button onClick={onChangeHandler}>Send message</button>
+    </div>
     </div>
   )
 }
