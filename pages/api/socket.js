@@ -297,6 +297,7 @@ const SocketHandler = (req, res) => {
         socket.broadcast.emit('update-player', connectedPlayers)
         if (connectedPlayers.length == 4) {
           startTheGameMainFunction(socket, io, connectedPlayers)
+          
 
         }
 
@@ -309,6 +310,7 @@ const SocketHandler = (req, res) => {
         //delete player from connected players
         connectedPlayers = connectedPlayers.filter(player => player.player_id !== socket.id)
         socket.broadcast.emit('update-player', connectedPlayers)
+        socket.broadcast.emit("close-game")
         console.log('user disconnected');
         table=[]
       });

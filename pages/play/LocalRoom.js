@@ -30,6 +30,7 @@ export default function Play(props) {
 
         })
         socket.on("logs",(res)=>{
+            toast.closeAll
             toast({
                 title: 'Notification.',
                 description: res,
@@ -67,7 +68,18 @@ export default function Play(props) {
         socket.on('update-hand', (res) => {
             setcards(res)
         })
-       
+        socket.on('close-game',(res)=>{
+            setconnectedroom(false)
+            toast.closeAll
+            toast({
+                title: 'Notification.',
+                description: "A player has disconnected game will finish",
+                status: 'error',
+                duration: 4000,
+                isClosable: true,
+              })
+            
+        })
     }
     function playTurn(cardID) {
         let selected=prompt("You play this card as ?")
