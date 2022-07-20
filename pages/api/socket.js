@@ -145,7 +145,7 @@ function checkIfGameIsOver(players) {
   return false;
 }
 
-function checkTaksir(players, socket) {
+function checkTaksir(players, socket,io) {
   sortCards(players);
   players.forEach(player => {
     let cards = player.cards;
@@ -158,7 +158,7 @@ function checkTaksir(players, socket) {
       }
       if (sameCardsNumber === 3) {
         console.log(`${player.name} has 4 the same card number that starts at index ${index - 2}`);
-        socket.broadcast.emit('taksir', `${card.value} Tkasrou by ${player.name}`);
+        io.emit('taksir', `${card.value} Tkasrou by ${player.name}`);
         const sameCards = player.cards.splice(index - 2, 4);
         sameCards.forEach(card => {
           card.player = player.name;
@@ -199,14 +199,14 @@ function startTheGameMainFunction(socket, io, connectedPlayers) {
   getCards(connectedPlayers);
   sortCards(connectedPlayers);
   // console.log(connectedPlayers)
-  //socket.broadcast.emit('jarya', connectedPlayers)
+  //io.emit('jarya', connectedPlayers)
   //trying new way of jarya
   jarya(connectedPlayers, io)
-  socket.broadcast.emit("logs","Jarya Done")
+  io.emit("logs","Jarya Done")
   //wait 3 seconds before starting the game
   setTimeout(() => {
-    socket.broadcast.emit('start-game', connectedPlayers)
-    checkTaksir(connectedPlayers, socket);
+    io.emit('start-game', connectedPlayers)
+    checkTaksir(connectedPlayers, socket,io);
     jarya(connectedPlayers, io)
   }, 3000);
   io.to(connectedPlayers[2].player_id).emit('yourTurn')
@@ -223,7 +223,7 @@ const SocketHandler = (req, res) => {
     res.socket.server.io = io
     io.on('connection', socket => {
       console.log("Client Connected")
-      socket.broadcast.emit('update-player', connectedPlayers)
+      io.emit('update-player', connectedPlayers)
 
       socket.on("playingTurn", (cardID, id, selected) => {
         let card=cards.find((item)=>(item.id==cardID))
@@ -232,7 +232,7 @@ const SocketHandler = (req, res) => {
         card.player_name = id
         table.push(card);
         /* table.push({ id: id, val: card.value, selected: selected }) */
-        socket.broadcast.emit("update-table", table)
+        io.emit("update-table", table)
         //remove the card from player hand
         let player = connectedPlayers.find(player => player.player_id === socket.id)
         let cardIndex = player.cards.findIndex(c => c.id === card.id)
@@ -261,22 +261,22 @@ const SocketHandler = (req, res) => {
           player.cards.push(...table)
           //empty the table
           table = []
-          socket.broadcast.emit("logs",player.name+" is lying he played "+card.value+" as "+lastPlayedCard.as+" All cards is going to him")
-          checkTaksir(connectedPlayers, socket);
+          io.emit("logs",player.name+" is lying he played "+card.value+" as "+lastPlayedCard.as+" All cards is going to him")
+          checkTaksir(connectedPlayers, socket,io);
           jarya(connectedPlayers, io)
-          socket.broadcast.emit("update-table", table)
+          io.emit("update-table", table)
         }else{
           //ken tla3 mouch yekdheb:
 
           //push the table cards to the socket.id player hand
           let player = connectedPlayers.find(player => player.player_id === socket.id)
           player.cards.push(...table)
-          socket.broadcast.emit("logs","All cards is going to "+player.name)
+          io.emit("logs","All cards is going to "+player.name)
           //empty the table
           table = []
-          checkTaksir(connectedPlayers, socket);
+          checkTaksir(connectedPlayers, socket,io);
           jarya(connectedPlayers, io)
-          socket.broadcast.emit("update-table", table)
+          io.emit("update-table", table)
         }
       })
 
@@ -294,7 +294,7 @@ const SocketHandler = (req, res) => {
       })
       socket.on('addplayer', player => {
         connectedPlayers.push({ id: 1, name: player, cards: [], player_id: socket.id })
-        socket.broadcast.emit('update-player', connectedPlayers)
+        io.emit('update-player', connectedPlayers)
         if (connectedPlayers.length == 4) {
           startTheGameMainFunction(socket, io, connectedPlayers)
           
@@ -309,8 +309,8 @@ const SocketHandler = (req, res) => {
         console.log(socket.id + " disconnected")
         //delete player from connected players
         connectedPlayers = connectedPlayers.filter(player => player.player_id !== socket.id)
-        socket.broadcast.emit('update-player', connectedPlayers)
-        socket.broadcast.emit("close-game")
+        io.emit('update-player', connectedPlayers)
+        io.emit("close-game")
         console.log('user disconnected');
         table=[]
       });
