@@ -92,7 +92,7 @@ export default function Play(props) {
 }
             
         else{
-            socket.emit('playingTurn', cardID,id,table[table.length-1].value)
+            socket.emit('playingTurn', cardID,id,table[table.length-1].as)
         }
     }
     function lie(item) {
