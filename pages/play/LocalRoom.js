@@ -68,6 +68,9 @@ export default function Play(props) {
         socket.on('update-hand', (res) => {
             setcards(res)
         })
+        socket.on('removeTurn', () => {
+            setcanPlay(false)
+        })
         socket.on('close-game',(res)=>{
             setconnectedroom(false)
             toast.closeAll
