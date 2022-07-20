@@ -177,16 +177,7 @@ function jarya(players, io) {
   })
 }
 
-function pickPlayerTurn(players, currentPlayerTurnId, io) {
-  //get player with the index next to the current player
-  let nextPlayerIndex = players.findIndex(player => player.player_id === currentPlayerTurnId) + 1;
-  if (nextPlayerIndex === players.length) {
-    nextPlayerIndex = 0;
-  }
-  let nextPlayer = players[nextPlayerIndex];
-  io.to(nextPlayer.player_id).emit('yourTurn')
-  return nextPlayer.player_id;
-}
+
 
 // array of played cards in the middle
 const playedCards = [];
@@ -195,7 +186,6 @@ const playedCards = [];
 const brokenCards = [];
 function moveTurnToTheNextPlayer(players, currentPlayer, io) {
   //get player id with the index next to the current player
-  console.log(currentPlayer)
   io.to(currentPlayer.player_id).emit('removeTurn')
   let nextPlayerIndex = players.findIndex(player => player.player_id === currentPlayer.player_id) + 1;
   if (nextPlayerIndex === players.length) {
@@ -264,7 +254,6 @@ const SocketHandler = (req, res) => {
         checkTaksir(connectedPlayers, socket);
         jarya(connectedPlayers, io)
         io.to(socket.id).emit('update-hand', player.cards)
-
         currentPlayer =  moveTurnToTheNextPlayer(connectedPlayers, currentPlayer, io)
       })
 
