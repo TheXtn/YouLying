@@ -209,9 +209,8 @@ function startTheGameMainFunction(socket, io, connectedPlayers) {
     checkTaksir(connectedPlayers, socket,io);
     jarya(connectedPlayers, io)
   }, 3000);
-  io.to(connectedPlayers[2].player_id).emit('yourTurn')
-  io.to(connectedPlayers[3].player_id).emit('yourTurn')
   io.to(connectedPlayers[0].player_id).emit('yourTurn')
+
 }
 const SocketHandler = (req, res) => {
 
