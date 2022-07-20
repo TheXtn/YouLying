@@ -175,6 +175,7 @@ function jarya(players, io) {
   players.forEach(player => {
     io.to(player.player_id).emit('jaryaV2', player.cards)
   })
+  io.emit('update-player', connectedPlayers)
 }
 
 
@@ -193,6 +194,7 @@ function moveTurnToTheNextPlayer(players, currentPlayer, io) {
   }
   let nextPlayer = players[nextPlayerIndex];
   io.to(nextPlayer.player_id).emit('yourTurn')
+  io.to(nextPlayer.player_id).emit('logs', `${nextPlayer.name} is your turn`)
   currentPlayer = nextPlayer;
   return currentPlayer;
 }
