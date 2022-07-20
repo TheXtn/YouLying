@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import io from 'Socket.IO-client'
+import io from 'socket.io-client'
 import styles from '../styles/Home.module.scss'
 
 let socket;
