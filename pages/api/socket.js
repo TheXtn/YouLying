@@ -1,5 +1,5 @@
 import { Server } from 'Socket.IO'
-let table=[]
+let table = []
 let cards = [
   { id: 1, suit: 'hearts', value: '1' },
   { id: 2, suit: 'hearts', value: '2' },
@@ -69,7 +69,7 @@ function getCards(players) {
       }
     });
   }
-  cards= [
+  cards = [
     { id: 1, suit: 'hearts', value: '1' },
     { id: 2, suit: 'hearts', value: '2' },
     { id: 3, suit: 'hearts', value: '3' },
@@ -177,10 +177,10 @@ function jarya(players, io) {
   })
 }
 
-function pickPlayerTurn(players,currentPlayerTurnId,io){
+function pickPlayerTurn(players, currentPlayerTurnId, io) {
   //get player with the index next to the current player
   let nextPlayerIndex = players.findIndex(player => player.player_id === currentPlayerTurnId) + 1;
-  if(nextPlayerIndex === players.length){
+  if (nextPlayerIndex === players.length) {
     nextPlayerIndex = 0;
   }
   let nextPlayer = players[nextPlayerIndex];
@@ -193,35 +193,27 @@ const playedCards = [];
 
 //array of broken cards
 const brokenCards = [];
-function startTheGameMainFunction(socket,io,connectedPlayers){
-          console.log("jaryaa !!")
-          //let currentPlayerTurnId = connectedPlayers[0].player_id
-          getCards(connectedPlayers);
-          sortCards(connectedPlayers);
-          // console.log(connectedPlayers)
-          socket.broadcast.emit('jarya', connectedPlayers)
-          //trying new way of jarya
-          jarya(connectedPlayers, io)
-
-          //wait 2 seconds before starting the game
-          setTimeout(() => {
-            socket.broadcast.emit('start-game', connectedPlayers)
-            checkTaksir(connectedPlayers, socket);
-            /* socket.broadcast.emit('jarya', connectedPlayers) */
-            jarya(connectedPlayers, io)
-           /*  io.to(connectedPlayers[0].player_id).emit('message', 'for your eyes only'); */
-           /* while(checkIfGameIsOver(connectedPlayers) === false){
-            currentPlayerTurnId = pickPlayerTurn(connectedPlayers,currentPlayerTurnId,io)
-            console.log(currentPlayerTurnId+" is now playing")
-            checkTaksir(connectedPlayers, socket);
-            jarya(connectedPlayers, io)
-           } */
-          }, 3000);
-          io.to(connectedPlayers[2].player_id).emit('yourTurn')
-          
+function startTheGameMainFunction(socket, io, connectedPlayers) {
+  console.log("jaryaa !!")
+  //let currentPlayerTurnId = connectedPlayers[0].player_id
+  getCards(connectedPlayers);
+  sortCards(connectedPlayers);
+  // console.log(connectedPlayers)
+  //socket.broadcast.emit('jarya', connectedPlayers)
+  //trying new way of jarya
+  jarya(connectedPlayers, io)
+  socket.broadcast.emit("logs","Jarya Done")
+  //wait 3 seconds before starting the game
+  setTimeout(() => {
+    socket.broadcast.emit('start-game', connectedPlayers)
+    checkTaksir(connectedPlayers, socket);
+    jarya(connectedPlayers, io)
+  }, 3000);
+  io.to(connectedPlayers[2].player_id).emit('yourTurn')
+  io.to(connectedPlayers[3].player_id).emit('yourTurn')
+  io.to(connectedPlayers[0].player_id).emit('yourTurn')
 }
 const SocketHandler = (req, res) => {
-  //check for taksir
 
   if (res.socket.server.io) {
     console.log('Socket is already running')
@@ -232,33 +224,85 @@ const SocketHandler = (req, res) => {
     io.on('connection', socket => {
       console.log("Client Connected")
       socket.broadcast.emit('update-player', connectedPlayers)
-      socket.on("playingTurn",(card,id,selected)=>{
-        table.push({id:id,val:card.value,selected:selected})
-        socket.broadcast.emit("update-table",table)
-        
+
+      socket.on("playingTurn", (cardID, id, selected) => {
+        let card=cards.find((item)=>(item.id==cardID))
+        card.as = selected;
+        card.player_id = socket.id;
+        card.player_name = id
+        table.push(card);
+        /* table.push({ id: id, val: card.value, selected: selected }) */
+        socket.broadcast.emit("update-table", table)
+        //remove the card from player hand
+        let player = connectedPlayers.find(player => player.player_id === socket.id)
+        let cardIndex = player.cards.findIndex(c => c.id === card.id)
+        player.cards.splice(cardIndex, 1)
+        checkTaksir(connectedPlayers, socket);
+        jarya(connectedPlayers, io)
+        io.to(socket.id).emit('update-hand', player.cards)
       })
-      socket.on("lying",(item,id)=>{
-        console.log(id+" has catch "+item.id+" lying")
-        connectedPlayers.map((player)=>{
-          if (player.name==item.id){
-            player.cards.push({id:9999,suit:"new",value:item.val})
+
+      socket.on('ittihem',(card)=>{
+        //stop the function if the table is empty
+        if (table.length === 0) {
+          return;
+        }
+        //get the last card in table
+        let lastPlayedCard = table[table.length - 1]
+        //get the player who played the last card from the table
+        let player_id = lastPlayedCard.player_id
+
+        let player = connectedPlayers.find(player => player.player_id === player_id)
+        
+        if(card.value != lastPlayedCard.as){
+          //kenou tla3 berrasmi yekdheb:
+
+          //push the table cards to player hand
+          player.cards.push(...table)
+          //empty the table
+          table = []
+          socket.broadcast.emit("logs",player.name+" is lying he played "+card.value+" as "+lastPlayedCard.as+" All cards is going to him")
+          checkTaksir(connectedPlayers, socket);
+          jarya(connectedPlayers, io)
+          socket.broadcast.emit("update-table", table)
+        }else{
+          //ken tla3 mouch yekdheb:
+
+          //push the table cards to the socket.id player hand
+          let player = connectedPlayers.find(player => player.player_id === socket.id)
+          player.cards.push(...table)
+          socket.broadcast.emit("logs","All cards is going to "+player.name)
+          //empty the table
+          table = []
+          checkTaksir(connectedPlayers, socket);
+          jarya(connectedPlayers, io)
+          socket.broadcast.emit("update-table", table)
+        }
+      })
+
+      socket.on("lying", (item, id) => {
+        console.log(id + " has catch " + item.id + " lying")
+        
+        connectedPlayers.map((player) => {
+          if (player.name == item.id) {
+            player.cards.push({ id: 9999, suit: item.suit, value: item.val })
             io.to(player.player_id).emit('jaryaV2', player.cards)
           }
         })
-        table=[]
-        socket.emit("update-table",table)
+        table = [] 
+        socket.emit("update-table", table)
       })
       socket.on('addplayer', player => {
         connectedPlayers.push({ id: 1, name: player, cards: [], player_id: socket.id })
         socket.broadcast.emit('update-player', connectedPlayers)
         if (connectedPlayers.length == 4) {
-          startTheGameMainFunction(socket,io,connectedPlayers)
-          
+          startTheGameMainFunction(socket, io, connectedPlayers)
+
         }
-        
+
         //emit to players their turn to play
         //while all players have cards
-       
+
       })
       socket.on('disconnect', () => {
         console.log(socket.id + " disconnected")
@@ -266,6 +310,7 @@ const SocketHandler = (req, res) => {
         connectedPlayers = connectedPlayers.filter(player => player.player_id !== socket.id)
         socket.broadcast.emit('update-player', connectedPlayers)
         console.log('user disconnected');
+        table=[]
       });
     })
   }
