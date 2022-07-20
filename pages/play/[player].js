@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from 'next/image'
 import io from 'Socket.IO-client'
+import styles from '../../styles/Home.module.scss'
 let socket;
 
 export default function Play(props) {
@@ -110,7 +111,7 @@ export default function Play(props) {
     }
     return (
         <div>
-            <div>
+            <div className={styles.loginform}>
                 <p>Nickname:</p>
                 <p><input value={id} onChange={(e)=>setid(e.target.value)} /></p>
                 <button onClick={() => { socket.emit('addplayer', id); setconnectedroom(true) }}>play</button>
