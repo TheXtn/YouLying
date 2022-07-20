@@ -85,9 +85,15 @@ export default function Play(props) {
         })
     }
     function playTurn(cardID) {
-        let selected=prompt("You play this card as ?")
+        if (table.length==0){
+            let selected=prompt("You play this card as ?")
         socket.emit('playingTurn', cardID,id,selected)
-        //setcanPlay(!canPlay)
+    //setcanPlay(!canPlay)
+}
+            
+        else{
+            socket.emit('playingTurn', cardID,id,table[table.length-1].value)
+        }
     }
     function lie(item) {
         socket.emit('ittihem', item)

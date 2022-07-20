@@ -267,7 +267,7 @@ const SocketHandler = (req, res) => {
         //get the player who played the last card from the table
         let player_id = lastPlayedCard.player_id
 
-        let player = connectedPlayers.find(player => player.player_id === player_id)
+        var player = connectedPlayers.find(player => player.player_id === player_id)
 
         if (card.value != lastPlayedCard.as) {
           //kenou tla3 berrasmi yekdheb:
@@ -276,13 +276,31 @@ const SocketHandler = (req, res) => {
           player.cards.push(...table)
           //empty the table
           table = []
+          
           io.emit("logs", player.name + " is lying he played " + card.value + " as " + lastPlayedCard.as + " All cards is going to him")
           checkTaksir(connectedPlayers, socket, io);
           jarya(connectedPlayers, io)
           io.emit("update-table", table)
+          let socketPlayer=connectedPlayers.find((p)=>p.player_id==socket.id)
+          io.to(socket.id).emit("yourTurn")
+          currentPlayer=socketPlayer
+          connectedPlayers.map((p)=>{
+            if (p.player_id!=socket.id){
+              io.to(p.player_id).emit("removeTurn")
+            }
+          })
+          
         } else {
           //ken tla3 mouch yekdheb:
-
+          let sada9=connectedPlayers.find(player => player.player_id === player_id)
+          io.to(sada9.player_id).emit("yourTurn")
+          currentPlayer=sada9
+          connectedPlayers.map((p)=>{
+            if (p.player_id!=sada9.player_id){
+              io.to(p.player_id).emit("removeTurn")
+            }
+          })
+          
           //push the table cards to the socket.id player hand
           let player = connectedPlayers.find(player => player.player_id === socket.id)
           player.cards.push(...table)
