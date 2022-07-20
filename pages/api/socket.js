@@ -311,8 +311,11 @@ const SocketHandler = (req, res) => {
         connectedPlayers = connectedPlayers.filter(player => player.player_id !== socket.id)
         io.emit('update-player', connectedPlayers)
         io.emit("close-game")
-        console.log('user disconnected');
         table=[]
+        connectedPlayers.map((player)=>{
+          socket.disconnect(player.player_id)
+        })
+        connectedPlayers=[]
       });
     })
   }
