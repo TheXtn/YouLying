@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useToast } from '@chakra-ui/react'
 import { Container,VStack,Flex,Heading,Input,Button,Box,Text } from '@chakra-ui/react'
 
-import io from 'Socket.IO-client'
+import io from 'socket.io-client'
 import Table from "../../components/Table";
 import Board from "../../components/Board";
 import Cards from "../../components/Cards";

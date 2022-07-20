@@ -1,4 +1,4 @@
-import { Server } from 'Socket.IO'
+import { Server } from 'socket.io'
 let table = []
 let cards = [
   { id: 1, suit: 'hearts', value: '1' },
