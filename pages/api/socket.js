@@ -364,7 +364,7 @@ const SocketHandler = (req, res) => {
       socket.on('addplayer', player => {
         connectedPlayers.push({ id: 1, name: player, cards: [], player_id: socket.id })
         io.emit('update-player', connectedPlayers)
-        if (connectedPlayers.length == 4) {
+        if (connectedPlayers.length == 5) {
           currentPlayer = startTheGameMainFunction(socket, io, connectedPlayers, currentPlayer)
 
 
