@@ -214,8 +214,8 @@ function startTheGameMainFunction(socket, io, connectedPlayers, currentPlayer) {
     jarya(connectedPlayers, io)
     io.to(currentPlayer.player_id).emit('yourTurn')
   }, 3000);
-
   
+  io.emit("whoplaying",currentPlayer.name)
 
 
   /* io.to(connectedPlayers[2].player_id).emit('yourTurn')
@@ -255,6 +255,7 @@ const SocketHandler = (req, res) => {
         jarya(connectedPlayers, io)
         io.to(socket.id).emit('update-hand', player.cards)
         currentPlayer =  moveTurnToTheNextPlayer(connectedPlayers, currentPlayer, io)
+        io.emit("whoplaying",currentPlayer.name)
       })
 
       socket.on('ittihem', (card) => {
@@ -289,6 +290,7 @@ const SocketHandler = (req, res) => {
               io.to(p.player_id).emit("removeTurn")
             }
           })
+          io.emit("whoplaying",currentPlayer.name)
           
         } else {
           //ken tla3 mouch yekdheb:
@@ -300,7 +302,7 @@ const SocketHandler = (req, res) => {
               io.to(p.player_id).emit("removeTurn")
             }
           })
-          
+          io.emit("whoplaying",currentPlayer.name)
           //push the table cards to the socket.id player hand
           let player = connectedPlayers.find(player => player.player_id === socket.id)
           player.cards.push(...table)

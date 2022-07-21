@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from 'next/image'
 import { useToast } from '@chakra-ui/react'
-import { Container,VStack,Flex,Heading,Input,Button,Box,Text } from '@chakra-ui/react'
+import { Container,HStack,VStack,Flex,Heading,Input,Button,Box,Text } from '@chakra-ui/react'
 
 import io from 'socket.io-client'
 import Table from "../../components/Table";
@@ -19,7 +19,7 @@ export default function Play(props) {
     const [canPlay, setcanPlay] = useState(false)
     const [connectedroom, setconnectedroom] = useState(false)
     const [table,settable]=useState([])
-
+    const [turn,setturn]=useState("")
     const [id, setid] = useState('')
     const toast = useToast()
     const socketInitializer = async () => {
@@ -62,6 +62,10 @@ export default function Play(props) {
         socket.on('yourTurn', () => {
             setcanPlay(true)
         })
+        socket.on('whoplaying',(res)=>{
+            
+            setturn(res)
+        })
         socket.on("update-table", (tab) => {
             settable(tab)
         })
@@ -103,14 +107,23 @@ export default function Play(props) {
         return (
             <Container  maxW='container.xl' p={0}>
                 
-                <Flex h={'100vh'} py={20} spacing={10}>
+                <Flex h={'100vh'} py={20} spacing={10} direction={['column','row']}>
                 <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} bg={"green.50"}>
                 <Cards cards={cards} canPlay={canPlay} playTurn={playTurn}/>
                 <Taksir taksir={taksir}/>
                 </VStack>
-                <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} bg={"gray.200"}>
+                <Flex w={'full'}  spacing={10} direction={"column"}>
+                <HStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} bg={"gray.200"}>
                 <Table table={table} lie={lie}/>
-                </VStack>
+
+               
+                </HStack>
+                <HStack bg={'teal'} w="full" h={"30vh"} p={10} spacing={10} alignItems={"flex-start"} >
+
+                <Heading>Turn at : {turn}</Heading>
+                
+                </HStack>
+                </Flex>
                 <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} bg={"red.50"}>
                 <Heading>I Am Player: {id}</Heading>
                 <Board players={players}/>
