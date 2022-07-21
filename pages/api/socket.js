@@ -323,6 +323,7 @@ const SocketHandler = (req, res) => {
         } else {
           //ken tla3 mouch yekdheb:
           let sada9=connectedPlayers.find(player => player.player_id === player_id)
+          
           io.to(sada9.player_id).emit("yourTurn")
           currentPlayer=sada9
           connectedPlayers.map((p)=>{
@@ -330,6 +331,11 @@ const SocketHandler = (req, res) => {
               io.to(p.player_id).emit("removeTurn")
             }
           })
+          if (sada9.cards.length==0){
+            currentPlayer=moveTurnToTheNextPlayer(connectedPlayers,currentPlayer,io)
+            io.emit("logs","Player "+sada9.name+" Won")
+            connectedPlayers=connectedPlayers.filter((p)=>(p.player_id!=sada9.player_id)) 
+          }
           io.emit("whoplaying",currentPlayer.name)
           //push the table cards to the socket.id player hand
           let player = connectedPlayers.find(player => player.player_id === socket.id)

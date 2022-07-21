@@ -13,6 +13,7 @@ import Taksir from "../../components/Taksir";
 let socket;
 
 export default function Play(props) {
+    
     const [taksir, setTaksir] = useState([]);
     const [players, setplayers] = useState([])
     const [cards, setcards] = useState([])
@@ -90,10 +91,10 @@ export default function Play(props) {
             
         })
     }
-    function playTurn(cardID) {
+    function playTurn(cardID,numberas) {
         if (table.length==0){
-            let selected=prompt("You play this card as ?")
-        socket.emit('playingTurn', cardID,id,selected)
+            
+        socket.emit('playingTurn', cardID,id,numberas)
     //setcanPlay(!canPlay)
 }
             
@@ -116,7 +117,7 @@ export default function Play(props) {
                 
                 <Flex h={'100vh'} py={20} spacing={10} direction={['column','row']}>
                 <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} bg={"green.50"}>
-                <Cards cards={cards} canPlay={canPlay} playTurn={playTurn}/>
+                <Cards table={table}  cards={cards} canPlay={canPlay} playTurn={playTurn}/>
                 <Taksir taksir={taksir}/>
                 </VStack>
                 <Flex w={'full'}  spacing={10} direction={"column"}>
@@ -131,17 +132,20 @@ export default function Play(props) {
                 
                 </HStack>
                 </Flex>
+                <Flex w={'full'}  spacing={10} direction={"column"}>
                 <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} bg={"red.50"}>
-                <Heading>I Am Player: {id}</Heading>
+                
                 <Board players={players}/>
                 </VStack>
+                <HStack bg={'blue.200'} w="full" h={"30vh"} p={10} spacing={10} alignItems={"flex-start"} >
+
+                <Heading>Leaderboard :</Heading>
                 
-                
+                </HStack>
                 </Flex>
                 
-                
+                </Flex>
                
-                
             </Container>
         )
     }
