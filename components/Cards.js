@@ -28,7 +28,7 @@ export default function Cards(props){
                 <Select placeholder='Select card' value={card} onChange={(e)=>{setcard(e.target.value)}}>
                 {
                     cards.map((j) => {
-                        return (<><option value={j.id} >{j.value} of {j.suit}</option></>)
+                        return (<><option value={j.id} >{j.name} of {j.suit}</option></>)
                     })
                 }
             </Select>
