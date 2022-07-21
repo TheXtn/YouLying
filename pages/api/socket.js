@@ -291,6 +291,10 @@ const SocketHandler = (req, res) => {
         let lastPlayedCard = table[table.length - 1]
         //get the player who played the last card from the table
         let player_id = lastPlayedCard.player_id
+        if(player_id == socket.id){
+          io.to(socket.id).emit("logs","You can't accuse yourself")
+          return;
+        }
 
         var player = connectedPlayers.find(player => player.player_id === player_id)
 
