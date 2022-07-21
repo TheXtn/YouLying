@@ -10,6 +10,7 @@ import Table from "../../components/Table";
 import Board from "../../components/Board";
 import Cards from "../../components/Cards";
 import Taksir from "../../components/Taksir";
+import Leaders from "../../components/Leaders";
 let socket;
 
 export default function Play(props) {
@@ -23,6 +24,7 @@ export default function Play(props) {
     const [turn,setturn]=useState("")
     const [id, setid] = useState('')
     const [full,setfull]=useState(false)
+    const [leaderBoard,setleaderBoard]=useState([])
     const toast = useToast()
     const socketInitializer = async () => {
         await fetch('/api/socket');
@@ -90,6 +92,9 @@ export default function Play(props) {
               })
             
         })
+        socket.on('update-leaderBoard', (res) => {
+            setleaderBoard(res)
+        })
     }
     function playTurn(cardID,numberas) {
         if (table.length==0){
@@ -135,12 +140,12 @@ export default function Play(props) {
                 <Flex w={'full'}  spacing={10} direction={"column"}>
                 <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} bg={"red.50"}>
                 
-                <Board players={players}/>
+                <Board players={players} />
                 </VStack>
                 <HStack bg={'blue.200'} w="full" h={"30vh"} p={10} spacing={10} alignItems={"flex-start"} >
 
                 <Heading>Leaderboard :</Heading>
-                
+                <Leaders leaderBoard={leaderBoard}/>
                 </HStack>
                 </Flex>
                 
