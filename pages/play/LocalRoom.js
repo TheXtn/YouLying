@@ -21,6 +21,7 @@ export default function Play(props) {
     const [table,settable]=useState([])
     const [turn,setturn]=useState("")
     const [id, setid] = useState('')
+    const [full,setfull]=useState(false)
     const toast = useToast()
     const socketInitializer = async () => {
         await fetch('/api/socket');
@@ -29,6 +30,7 @@ export default function Play(props) {
             console.log("connected")
 
         })
+        
         socket.on("logs",(res)=>{
             toast.closeAll
             toast({
@@ -103,6 +105,11 @@ export default function Play(props) {
         socket.emit('ittihem', item)
     }
     useEffect(() => { socketInitializer() }, [])
+    if (full){
+        return(
+            <Heading>Room is full</Heading>
+        )
+    }
     if (connectedroom) {
         return (
             <Container  maxW='container.xl' p={0}>
