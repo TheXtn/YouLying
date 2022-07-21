@@ -15,9 +15,11 @@ export default function Cards(props){
                     })
                 }
             </Select>
-            
+                {props.canPlay && (
+<Button  onClick={()=>{props.playTurn(card)}}>Play</Button>
+                ) }
         
-                <Button disabled={!props.canPlay} onClick={()=>{props.playTurn(card)}}>Play</Button>
+                
         </>
    
     )

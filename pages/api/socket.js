@@ -1,4 +1,5 @@
 import { Server } from 'socket.io'
+let currentPlayer = null;
 let table = []
 let cards = [
   { id: 1, suit: 'hearts', value: '1' },
@@ -169,6 +170,9 @@ function checkTaksir(players, socket, io) {
     })
 
   })
+  
+  
+  
 }
 //jarya
 function jarya(players, io) {
@@ -187,6 +191,7 @@ const playedCards = [];
 const brokenCards = [];
 function moveTurnToTheNextPlayer(players, currentPlayer, io) {
   //get player id with the index next to the current player
+
   io.to(currentPlayer.player_id).emit('removeTurn')
   let nextPlayerIndex = players.findIndex(player => player.player_id === currentPlayer.player_id) + 1;
   if (nextPlayerIndex === players.length) {
@@ -196,6 +201,22 @@ function moveTurnToTheNextPlayer(players, currentPlayer, io) {
   io.to(nextPlayer.player_id).emit('yourTurn')
   io.to(nextPlayer.player_id).emit('logs', `${nextPlayer.name} is your turn`)
   currentPlayer = nextPlayer;
+  if (currentPlayer.cards.length<=0){
+    io.emit("logs","Player "+currentPlayer.name+" Won !")
+    io.to(currentPlayer.player_id).emit('removeTurn')
+  let nextPlayerIndex = players.findIndex(player => player.player_id === currentPlayer.player_id) + 1;
+  if (nextPlayerIndex === players.length) {
+    nextPlayerIndex = 0;
+  }
+  let nextPlayer = players[nextPlayerIndex];
+  io.to(nextPlayer.player_id).emit('yourTurn')
+  let old=currentPlayer
+  currentPlayer = nextPlayer;
+  connectedPlayers=connectedPlayers.filter((item)=>(item.player_id!=old.player_id))
+  io.emit('update-player',connectedPlayers)
+      
+    
+  }
   return currentPlayer;
 }
 function startTheGameMainFunction(socket, io, connectedPlayers, currentPlayer) {
@@ -216,8 +237,8 @@ function startTheGameMainFunction(socket, io, connectedPlayers, currentPlayer) {
     jarya(connectedPlayers, io)
     io.to(currentPlayer.player_id).emit('yourTurn')
   }, 3000);
-
   
+  io.emit("whoplaying",currentPlayer.name)
 
 
   /* io.to(connectedPlayers[2].player_id).emit('yourTurn')
@@ -229,7 +250,7 @@ function startTheGameMainFunction(socket, io, connectedPlayers, currentPlayer) {
 
 const SocketHandler = (req, res) => {
 
-  let currentPlayer = null;
+  
 
   if (res.socket.server.io) {
     console.log('Socket is already running')
@@ -239,6 +260,7 @@ const SocketHandler = (req, res) => {
     res.socket.server.io = io
     io.on('connection', socket => {
       console.log("Client Connected")
+    
       io.emit('update-player', connectedPlayers)
 
       socket.on("playingTurn", (cardID, id, selected) => {
@@ -257,6 +279,7 @@ const SocketHandler = (req, res) => {
         jarya(connectedPlayers, io)
         io.to(socket.id).emit('update-hand', player.cards)
         currentPlayer =  moveTurnToTheNextPlayer(connectedPlayers, currentPlayer, io)
+        io.emit("whoplaying",currentPlayer.name)
       })
 
       socket.on('ittihem', (card) => {
@@ -291,6 +314,7 @@ const SocketHandler = (req, res) => {
               io.to(p.player_id).emit("removeTurn")
             }
           })
+          io.emit("whoplaying",currentPlayer.name)
           
         } else {
           //ken tla3 mouch yekdheb:
@@ -302,7 +326,7 @@ const SocketHandler = (req, res) => {
               io.to(p.player_id).emit("removeTurn")
             }
           })
-          
+          io.emit("whoplaying",currentPlayer.name)
           //push the table cards to the socket.id player hand
           let player = connectedPlayers.find(player => player.player_id === socket.id)
           player.cards.push(...table)
