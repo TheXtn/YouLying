@@ -381,6 +381,13 @@ const SocketHandler = (req, res) => {
       })
       socket.on('disconnect', () => {
         console.log(socket.id + " disconnected")
+        //get player from the connectedPlayers
+        try {
+          let player = connectedPlayers.find(player => player.player_id === socket.id)
+          io.emit('logs', player.name + " disconnected")
+        } catch (e) {
+          console.log(e)
+        }
         //delete player from connected players
         connectedPlayers = connectedPlayers.filter(player => player.player_id !== socket.id)
         io.emit('update-player', connectedPlayers)
