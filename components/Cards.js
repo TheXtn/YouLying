@@ -7,6 +7,8 @@ import {
     NumberIncrementStepper,
     NumberDecrementStepper,
   } from '@chakra-ui/react'
+  import { useToast } from '@chakra-ui/react'
+
 import {
     Modal,
     ModalOverlay,
@@ -17,15 +19,31 @@ import {
     ModalCloseButton,
   } from '@chakra-ui/react'
 export default function Cards(props){
-  
+    const toast = useToast()
     const [numberas,setnumberas]=useState(1)
     const [openmodal,setopenmodal]=useState(false)
     const cards=props.cards
     const [card,setcard]=useState("")
     const [Cardstoplay,setcardstoplay]=useState([])
     function handleselect(){
+      if (Cardstoplay.includes(card)){
+        toast({
+          title: 'Card Error',
+          description: "Card Already Selected",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        })
+        return 
+      }
       if (Cardstoplay==3){
-        alert("Max 3 cards")
+        toast({
+          title: 'Card Error',
+          description: "Max 3 card",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        })
         return
       }
       setcardstoplay((prevCards)=>([...prevCards,card]))
