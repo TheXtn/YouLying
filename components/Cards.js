@@ -24,9 +24,9 @@ export default function Cards(props){
     const [openmodal,setopenmodal]=useState(false)
     const cards=props.cards
     const [card,setcard]=useState("")
-    const [Cardstoplay,setcardstoplay]=useState([])
+    const [cardstoplay,setcardstoplay]=useState([])
     function handleselect(){
-      if (Cardstoplay.includes(card)){
+      if (cardstoplay.includes(card)){
         toast({
           title: 'Card Error',
           description: "Card Already Selected",
@@ -36,7 +36,7 @@ export default function Cards(props){
         })
         return 
       }
-      if (Cardstoplay==3){
+      if (cardstoplay.length==3){
         toast({
           title: 'Card Error',
           description: "Max 3 card",
@@ -59,12 +59,12 @@ export default function Cards(props){
                     })
                 }
             </Select>
-                {props.canPlay && props.table.length==0 && (
+                {cardstoplay?.length!=0 && props.canPlay && props.table.length==0 && (
 <Button  onClick={()=>{setopenmodal(true)}}>Play</Button>
                 ) }
                 
-                {props.canPlay && props.table.length!=0 && (
-<Button  onClick={()=>{props.playTurn(Cardstoplay,numberas);setcardstoplay([])}}>Play</Button>
+                {cardstoplay.length!=0 && props.canPlay && props.table.length!=0 && (
+<Button  onClick={()=>{props.playTurn(cardstoplay,numberas);setcardstoplay([])}}>Play</Button>
                 ) }
         
                 
@@ -85,7 +85,7 @@ export default function Cards(props){
           </ModalBody>
 
           <ModalFooter> 
-            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(Cardstoplay,numberas);setopenmodal(false);setcardstoplay([])}}>
+            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(cardstoplay,numberas);setopenmodal(false);setcardstoplay([])}}>
               Go
             </Button>
           
@@ -93,9 +93,10 @@ export default function Cards(props){
         </ModalContent>
                
                 </Modal>:""}
-        <Button onClick={()=>{handleselect()}}>Select this card</Button>
+          {props.canPlay && <Button onClick={()=>{handleselect()}}>Select this card</Button>}
+        
         <Heading>Cards to play :</Heading>
-        {Cardstoplay.map((card)=>{
+        {cardstoplay.map((card)=>{
           return (
             cards.map((c)=>{
               if (c.id==card){

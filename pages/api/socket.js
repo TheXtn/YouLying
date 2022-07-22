@@ -274,6 +274,9 @@ const SocketHandler = (req, res) => {
           card.player_id = socket.id;
           card.player_name = id
           table.push(card);
+          //remove card from player hand
+          let p = connectedPlayers.find((item) => (item.player_id == socket.id))
+          p.cards = p.cards.filter((item) => (item.id != carta))
         })
 
       
@@ -281,11 +284,7 @@ const SocketHandler = (req, res) => {
         io.emit("update-table", table)
         //remove the card from player hand
         let player = connectedPlayers.find(player => player.player_id === socket.id)
-        Cardstoplay.forEach(card => {
-          let cardIndex = player.cards.findIndex(c => c.id === card.id)
-          player.cards.splice(cardIndex, 1)
-        })
-        
+    
         checkTaksir(connectedPlayers, socket);
         jarya(connectedPlayers, io)
         io.to(socket.id).emit('update-hand', player.cards)
