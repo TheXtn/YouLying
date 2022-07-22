@@ -6,7 +6,7 @@ import styles from '../../styles/Custom.module.scss'
 import { useToast } from '@chakra-ui/react'
 import { Container,HStack,VStack,Flex,Heading,Input,Button,Box,Text } from '@chakra-ui/react'
 import { Grid, GridItem } from '@chakra-ui/react'
-
+import ReactHowler from 'react-howler'
 import io from 'socket.io-client'
 import Table from "../../components/Table";
 import Board from "../../components/Board";
@@ -29,6 +29,7 @@ export default function Play(props) {
     const [leaderBoard,setleaderBoard]=useState([])
     const toast = useToast()
     const socketInitializer = async () => {
+        
         await fetch('/api/socket');
         socket = io()
         socket.on('connect', () => {
@@ -97,6 +98,10 @@ export default function Play(props) {
         socket.on('update-leaderBoard', (res) => {
             setleaderBoard(res)
         })
+        socket.on("jad3lik",()=>{
+            const audio = new Audio("https://www.mboxdrive.com/jad3lik.mp3")
+        audio.play()
+        })
     }
     function playTurn(Cardstoplay,numberas) {
         if (table.length==0){
@@ -112,7 +117,9 @@ export default function Play(props) {
     function lie(item) {
         socket.emit('ittihem', item)
     }
-    useEffect(() => { socketInitializer() }, [])
+    useEffect(() => { socketInitializer();
+        
+    }, [])
     if (full){
         return(
             <Heading>Room is full</Heading>
@@ -120,6 +127,7 @@ export default function Play(props) {
     }
     if (connectedroom) {
         return (
+            
             <div className={styles.body}>
 
                 <Grid
@@ -186,6 +194,7 @@ export default function Play(props) {
         <br/>
         <br/>
         <Container>
+      
             <Flex spacing={10}>
             <Box shadow={"xl"} spacing={20} w={"full"} margin={10}>
                 <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"center"} >
@@ -194,7 +203,8 @@ export default function Play(props) {
                     <Text><b style={{fontSize:'1.5rem',color:'white'}}>Nickname</b></Text>
                     <p><Input value={id} onChange={(e)=>setid(e.target.value)} /></p>
                 </div>
-                <Button onClick={() => { socket.emit('addplayer', id); setconnectedroom(true) }}>Play</Button>
+                <Button onClick={() => { socket.emit('addplayer', id); setconnectedroom(true);const audio = new Audio("https://www.mboxdrive.com/marhbe3asba.mp3")
+        audio.play() }}>Play</Button>
                 </VStack>            
             </Box>
             </Flex>

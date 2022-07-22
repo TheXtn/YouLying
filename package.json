@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@andyet/simplewebrtc": "^1.30.5",
     "@chakra-ui/react": "^2.2.4",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -16,6 +17,7 @@
     "next": "12.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-howler": "^5.2.0",
     "sass": "^1.53.0",
     "socket.io": "^4.5.1",
     "socket.io-client": "^4.5.1"

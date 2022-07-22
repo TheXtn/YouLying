@@ -8,7 +8,7 @@ import {
     NumberDecrementStepper,
   } from '@chakra-ui/react'
   import { useToast } from '@chakra-ui/react'
-
+import ReactHowler from 'react-howler'
 import {
     Modal,
     ModalOverlay,
@@ -49,7 +49,9 @@ export default function Cards(props){
       setcardstoplay((prevCards)=>([...prevCards,card]))
     }
     return (
+      
         <div style={{textAlign:'center'}}>
+          
             <Heading>My cards : {cards.length}</Heading>
                 
                 <Select placeholder='Select card' value={card} onChange={(e)=>{setcard(e.target.value)}}>
