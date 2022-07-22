@@ -39,7 +39,7 @@ export default function Cards(props){
       if (cardstoplay.length==3){
         toast({
           title: 'Card Error',
-          description: "Max 3 card",
+          description: "Max 3 cards",
           status: 'error',
           duration: 3000,
           isClosable: true,
@@ -61,13 +61,7 @@ export default function Cards(props){
                     })
                 }
             </Select>
-                {cardstoplay?.length!=0 && props.canPlay && props.table.length==0 && (
-<Button  onClick={()=>{setopenmodal(true)}}>Play</Button>
-                ) }
-                
-                {cardstoplay.length!=0 && props.canPlay && props.table.length!=0 && (
-<Button  onClick={()=>{props.playTurn(cardstoplay,numberas);setcardstoplay([])}}>Play</Button>
-                ) }
+              
         
                 
         {openmodal?<Modal isOpen={openmodal} onClose={()=>setopenmodal(false)}>
@@ -103,12 +97,22 @@ export default function Cards(props){
             cards.map((c)=>{
               if (c.id==card){
                 return(
-                  <p>{c.value} of {c.suit}</p>
+                  <Heading color={"whatsapp.100"}>
+                  {c.value} of {c.suit}
+                  </Heading>
+                  
                 )
               }
             })
           )
         })}
+          {cardstoplay?.length!=0 && props.canPlay && props.table.length==0 && (
+<Button  onClick={()=>{setopenmodal(true)}}>Play</Button>
+                ) }
+                
+                {cardstoplay.length!=0 && props.canPlay && props.table.length!=0 && (
+<Button  onClick={()=>{props.playTurn(cardstoplay,numberas);setcardstoplay([])}}>Play</Button>
+                ) }
         </div>
    
     )
