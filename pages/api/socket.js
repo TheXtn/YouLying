@@ -294,6 +294,26 @@ const SocketHandler = (req, res) => {
         let lastPlayedCard = table[table.length - 1]
         //get the player who played the last card from the table
         let player_id = lastPlayedCard.player_id
+
+        //loop the played cards backwards and get all the card played by the last player until you find a card not played by the last player
+        let playedcards = []
+        for (let i = table.length - 1; i >= 0; i--) {
+          if (table[i].player_id === player_id) {
+            playedcards.push(table[i])
+          } else {
+            break;
+          }
+        }
+        //check if all the cards in played cards are equal the their as attribute
+        let allEqual = true;
+        for (let i = 0; i < playedcards.length; i++) {
+          if (playedcards[i].as != playedcards[i].value) {
+            allEqual = false;
+            break;
+          }
+        }
+        console.log(allEqual)
+
         if (player_id == socket.id) {
           io.to(socket.id).emit("logs", "You can't accuse yourself")
           return;
@@ -301,7 +321,7 @@ const SocketHandler = (req, res) => {
 
         var player = connectedPlayers.find(player => player.player_id === player_id)
 
-        if (card.value != lastPlayedCard.as) {
+        if (allEqual == false) {
           //kenou tla3 berrasmi yekdheb:
 
           //push the table cards to player hand
