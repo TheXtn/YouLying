@@ -2,8 +2,10 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from 'next/image'
+import styles from '../../styles/Custom.module.scss'
 import { useToast } from '@chakra-ui/react'
 import { Container,HStack,VStack,Flex,Heading,Input,Button,Box,Text } from '@chakra-ui/react'
+import { Grid, GridItem } from '@chakra-ui/react'
 
 import io from 'socket.io-client'
 import Table from "../../components/Table";
@@ -96,15 +98,15 @@ export default function Play(props) {
             setleaderBoard(res)
         })
     }
-    function playTurn(cardID,numberas) {
+    function playTurn(Cardstoplay,numberas) {
         if (table.length==0){
             
-        socket.emit('playingTurn', cardID,id,numberas)
+        socket.emit('playingTurn', Cardstoplay,id,numberas)
     //setcanPlay(!canPlay)
 }
             
         else{
-            socket.emit('playingTurn', cardID,id,table[table.length-1].as)
+            socket.emit('playingTurn', Cardstoplay,id,table[table.length-1].as)
         }
     }
     function lie(item) {
@@ -118,56 +120,87 @@ export default function Play(props) {
     }
     if (connectedroom) {
         return (
-            <Container  maxW='container.xl' p={0}>
-                
-                <Flex h={'100vh'} py={20} spacing={10} direction={['column','row']}>
-                <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} bg={"green.50"}>
-                <Cards table={table}  cards={cards} canPlay={canPlay} playTurn={playTurn}/>
-                <Taksir taksir={taksir}/>
-                </VStack>
-                <Flex w={'full'}  spacing={10} direction={"column"}>
-                <HStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} bg={"gray.200"}>
-                <Table table={table} lie={lie}/>
+            <div className={styles.body}>
 
+                <Grid
+                    h='100vh'
+                    templateRows='repeat(2, 1fr)'
+                    templateColumns='repeat(5, 1fr)'
+                    gap={30}
+                >
+                    <GridItem rowSpan={2} colSpan={1} style={{background:'rgba(255,255,255,0.1)',borderRadius:'50px',boxShadow: '20px 1px 1vw rgba(0, 0, 0, 0.5)'}}>
+                        <Grid
+                            h='100vh'
+                            templateRows='repeat(2, 1fr)'
+                            templateColumns='repeat(1, 1fr)'
+                            gap={0}
+                        >
+                            <GridItem rowSpan={1} colSpan={1}>
+                                <Board players={players} />
+                            </GridItem>
+                            <GridItem rowSpan={1} colSpan={1} >
+                                <div style={{textAlign:'center',color:'white'}}>
+                                    ___________________________________________<br/>
+                                    <b style={{fontSize:'50px'}}>LeaderBoard</b>
+                                    <Leaders leaderBoard={leaderBoard}/>
+                                </div>
+                            </GridItem>
+                        </Grid>
+                    </GridItem>
+                    <GridItem rowSpan={2} colSpan={3}>
+                        <Grid
+                        h='100vh'
+                        templateRows='repeat(8, 1fr)'
+                        templateColumns='repeat(1, 1fr)'
+                        gap={10}
+                        >
+                            <GridItem rowSpan={2} colSpan={1} style={{background:'rgba(0,255,109,0.6)',borderRadius:'50px',boxShadow: '30px 35px 1vw rgba(0, 0, 0, 0.5)'}}>
+                                <div style={{textAlign:'center',fontSize:"40px",marginTop:'5%',color:'white'}}>
+                                    <b>{turn} Yal3ab</b>
+                                </div>
+                            </GridItem>
+                            <GridItem rowSpan={4} colSpan={1}>
+                                <Table table={table} lie={lie}/>
+                            </GridItem>
+                            <GridItem rowSpan={3} colSpan={1}  style={{background:'rgba(255,255,255,.8)',borderRadius:'50px',boxShadow: '30px 35px 1vw rgba(0, 0, 0, 0.5)'}}>
+                                <Cards table={table}  cards={cards} canPlay={canPlay} playTurn={playTurn}/>
+                            </GridItem>
+                        </Grid>
+                    </GridItem>
+                    <GridItem rowSpan={2} colSpan={1} style={{background:'rgba(255,255,255,0.1)',borderRadius:'50px',boxShadow: '20px 1px 1vw rgba(0, 0, 0, 0.5)'}}>
+                        <Taksir taksir={taksir}/>
+                    </GridItem>
+                </Grid>
                
-                </HStack>
-                <HStack bg={'teal'} w="full" h={"30vh"} p={10} spacing={10} alignItems={"flex-start"} >
-
-                <Heading>Turn at : {turn}</Heading>
-                
-                </HStack>
-                </Flex>
-                <Flex w={'full'}  spacing={10} direction={"column"}>
-                <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} bg={"red.50"}>
-                
-                <Board players={players} />
-                </VStack>
-                <HStack bg={'blue.200'} w="full" h={"30vh"} p={10} spacing={10} alignItems={"flex-start"} >
-
-                <Heading>Leaderboard :</Heading>
-                <Leaders leaderBoard={leaderBoard}/>
-                </HStack>
-                </Flex>
-                
-                </Flex>
-               
-            </Container>
+            </div>
         )
     }
     return (
-        <Container >
+        <div className={styles.body}>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <Container>
             <Flex spacing={10}>
             <Box shadow={"xl"} spacing={20} w={"full"} margin={10}>
-                <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"flex-start"} >
-                <Heading>Welcome to local room</Heading>
-                <Text>Nickname :</Text>
-                <p><Input value={id} onChange={(e)=>setid(e.target.value)} /></p>
+                <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"center"} >
+                <Heading style={{textAlign:'center',color:'white'}}>Welcome to local room</Heading>
+                <div style={{textAlign:'center'}}>
+                    <Text><b style={{fontSize:'1.5rem',color:'white'}}>Nickname</b></Text>
+                    <p><Input value={id} onChange={(e)=>setid(e.target.value)} /></p>
+                </div>
                 <Button onClick={() => { socket.emit('addplayer', id); setconnectedroom(true) }}>Play</Button>
                 </VStack>            
             </Box>
             </Flex>
             
         </Container>
+        </div>
     )
 
 

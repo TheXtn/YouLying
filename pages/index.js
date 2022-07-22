@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import io from 'socket.io-client'
-import styles from '../styles/Home.module.scss'
+import styles from '../styles/Custom.module.scss'
 
 let socket;
 
@@ -31,7 +31,7 @@ const Home = () => {
   
   return (
     
-    <div>
+    <div className={styles.body}>
     <div className={styles.selectserver}>
       <p>Select a room:</p>
       <p><select value={id} onChange={(e)=>setid(e.target.value)}>

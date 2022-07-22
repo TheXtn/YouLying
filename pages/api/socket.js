@@ -266,7 +266,8 @@ const SocketHandler = (req, res) => {
 
       io.emit('update-player', connectedPlayers)
 
-      socket.on("playingTurn", (cardID, id, selected) => {
+      socket.on("playingTurn", (Cardstoplay, id, selected) => {
+        console.log(Cardstoplay)
         let card = cards.find((item) => (item.id == cardID))
         card.as = selected;
         card.player_id = socket.id;
@@ -389,7 +390,7 @@ const SocketHandler = (req, res) => {
       socket.on('addplayer', player => {
         connectedPlayers.push({ id: 1, name: player, cards: [], player_id: socket.id })
         io.emit('update-player', connectedPlayers)
-        if (connectedPlayers.length == 5) {
+        if (connectedPlayers.length == 4) {
           currentPlayer = startTheGameMainFunction(socket, io, connectedPlayers, currentPlayer)
 
 
