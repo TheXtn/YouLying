@@ -10,7 +10,7 @@ export default function Board(props) {
                 {players.map((item) => {
 
                     return (
-                        <div style={{marginTop:'10px',marginBottom:'10px'}}>
+                        <div key={item.name} style={{marginTop:'10px',marginBottom:'10px'}}>
                             <b><Text key={item.name}>{item.name} has {item.cards.length} card(s)</Text></b>
                         </div>
                     )

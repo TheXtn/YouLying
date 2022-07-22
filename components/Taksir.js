@@ -4,7 +4,7 @@ export default function Taksir(props){
     return (
             <div style={{textAlign:'center',color:'white'}}>
                  <Heading>Taksir :</Heading>
-                 {taksir.map((j) => { return (<div style={{padding:'2px'}}><div style={{border:'1px solid black',borderRadius:'20px',padding:'2px'}}>{j}</div></div>) })}
+                 {taksir.map((j) => { return (<div key={j} style={{padding:'2px'}}><div style={{border:'1px solid black',borderRadius:'20px',padding:'2px'}}>{j}</div></div>) })}
             </div>
    
     )
