@@ -267,18 +267,25 @@ const SocketHandler = (req, res) => {
       io.emit('update-player', connectedPlayers)
 
       socket.on("playingTurn", (Cardstoplay, id, selected) => {
-        console.log(Cardstoplay)
-        let card = cards.find((item) => (item.id == cardID))
-        card.as = selected;
-        card.player_id = socket.id;
-        card.player_name = id
-        table.push(card);
+        //loop throuch cardstoplay
+        Cardstoplay.forEach(carta => {
+          let card = cards.find((item) => (item.id == carta))
+          card.as = selected;
+          card.player_id = socket.id;
+          card.player_name = id
+          table.push(card);
+        })
+
+      
         /* table.push({ id: id, val: card.value, selected: selected }) */
         io.emit("update-table", table)
         //remove the card from player hand
         let player = connectedPlayers.find(player => player.player_id === socket.id)
-        let cardIndex = player.cards.findIndex(c => c.id === card.id)
-        player.cards.splice(cardIndex, 1)
+        Cardstoplay.forEach(card => {
+          let cardIndex = player.cards.findIndex(c => c.id === card.id)
+          player.cards.splice(cardIndex, 1)
+        })
+        
         checkTaksir(connectedPlayers, socket);
         jarya(connectedPlayers, io)
         io.to(socket.id).emit('update-hand', player.cards)
@@ -313,7 +320,6 @@ const SocketHandler = (req, res) => {
             break;
           }
         }
-        console.log(allEqual)
 
         if (player_id == socket.id) {
           io.to(socket.id).emit("logs", "You can't accuse yourself")
