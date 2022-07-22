@@ -64,7 +64,7 @@ export default function Cards(props){
                 ) }
                 
                 {props.canPlay && props.table.length!=0 && (
-<Button  onClick={()=>{props.playTurn(Cardstoplay,numberas)}}>Play</Button>
+<Button  onClick={()=>{props.playTurn(Cardstoplay,numberas);setcardstoplay([])}}>Play</Button>
                 ) }
         
                 
@@ -85,7 +85,7 @@ export default function Cards(props){
           </ModalBody>
 
           <ModalFooter> 
-            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(Cardstoplay,numberas);setopenmodal(false)}}>
+            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(Cardstoplay,numberas);setopenmodal(false);setcardstoplay([])}}>
               Go
             </Button>
           
