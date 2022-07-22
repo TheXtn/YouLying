@@ -2,7 +2,7 @@ import { useRouter } from "next/router"
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from 'next/image'
-import styles from '../../styles/home.module.scss'
+import styles from '../../styles/Custom.module.scss'
 import { useToast } from '@chakra-ui/react'
 import { Container,HStack,VStack,Flex,Heading,Input,Button,Box,Text } from '@chakra-ui/react'
 import { Grid, GridItem } from '@chakra-ui/react'
