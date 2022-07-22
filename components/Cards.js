@@ -17,10 +17,19 @@ import {
     ModalCloseButton,
   } from '@chakra-ui/react'
 export default function Cards(props){
+  
     const [numberas,setnumberas]=useState(1)
     const [openmodal,setopenmodal]=useState(false)
     const cards=props.cards
     const [card,setcard]=useState("")
+    const [Cardstoplay,setcardstoplay]=useState([])
+    function handleselect(){
+      if (Cardstoplay==3){
+        alert("Max 3 cards")
+        return
+      }
+      setcardstoplay((prevCards)=>([...prevCards,card]))
+    }
     return (
         <div style={{textAlign:'center'}}>
             <Heading>My cards : {cards.length}</Heading>
@@ -37,10 +46,10 @@ export default function Cards(props){
                 ) }
                 
                 {props.canPlay && props.table.length!=0 && (
-<Button  onClick={()=>{props.playTurn(card,numberas)}}>Play</Button>
+<Button  onClick={()=>{props.playTurn(Cardstoplay,numberas)}}>Play</Button>
                 ) }
         
-                 {console.log(numberas)}
+                
         {openmodal?<Modal isOpen={openmodal} onClose={()=>setopenmodal(false)}>
         <ModalOverlay />
         <ModalContent>
@@ -48,7 +57,7 @@ export default function Cards(props){
           <ModalCloseButton />
           <ModalBody>
           <NumberInput onChange={(valueString) => setnumberas(parseInt(valueString))} defaultValue={1} min={1} max={13}>
-  {console.log(numberas)}
+
   <NumberInputField />
   <NumberInputStepper>
     <NumberIncrementStepper />
@@ -58,7 +67,7 @@ export default function Cards(props){
           </ModalBody>
 
           <ModalFooter> 
-            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(card,numberas);setopenmodal(false)}}>
+            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(Cardstoplay,numberas);setopenmodal(false)}}>
               Go
             </Button>
           
@@ -66,7 +75,19 @@ export default function Cards(props){
         </ModalContent>
                
                 </Modal>:""}
-        
+        <Button onClick={()=>{handleselect()}}>Select this card</Button>
+        <Heading>Cards to play :</Heading>
+        {Cardstoplay.map((card)=>{
+          return (
+            cards.map((c)=>{
+              if (c.id==card){
+                return(
+                  <p>{c.value} of {c.suit}</p>
+                )
+              }
+            })
+          )
+        })}
         </div>
    
     )

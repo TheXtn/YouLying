@@ -98,15 +98,15 @@ export default function Play(props) {
             setleaderBoard(res)
         })
     }
-    function playTurn(cardID,numberas) {
+    function playTurn(Cardstoplay,numberas) {
         if (table.length==0){
             
-        socket.emit('playingTurn', cardID,id,numberas)
+        socket.emit('playingTurn', Cardstoplay,id,numberas)
     //setcanPlay(!canPlay)
 }
             
         else{
-            socket.emit('playingTurn', cardID,id,table[table.length-1].as)
+            socket.emit('playingTurn', Cardstoplay,id,table[table.length-1].as)
         }
     }
     function lie(item) {
