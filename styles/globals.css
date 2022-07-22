@@ -1,6 +1,6 @@
 html,
 body {
-  background-image: url('/public/playingTable.jpg');
+  background-image: url('../public/playingTable.jpg');
   background-attachment: fixed;
   background-size: cover;
   background-position: center;

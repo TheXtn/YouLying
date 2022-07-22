@@ -22,7 +22,7 @@ export default function Cards(props){
     const cards=props.cards
     const [card,setcard]=useState("")
     return (
-        <>
+        <div style={{textAlign:'center'}}>
             <Heading>My cards : {cards.length}</Heading>
                 
                 <Select placeholder='Select card' value={card} onChange={(e)=>{setcard(e.target.value)}}>
@@ -35,6 +35,7 @@ export default function Cards(props){
                 {props.canPlay && props.table.length==0 && (
 <Button  onClick={()=>{setopenmodal(true)}}>Play</Button>
                 ) }
+                
                 {props.canPlay && props.table.length!=0 && (
 <Button  onClick={()=>{props.playTurn(card,numberas)}}>Play</Button>
                 ) }
@@ -66,7 +67,7 @@ export default function Cards(props){
                
                 </Modal>:""}
         
-        </>
+        </div>
    
     )
 }

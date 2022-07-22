@@ -31,7 +31,7 @@ const Home = () => {
   
   return (
     
-    <div>
+    <div className={styles.body}>
     <div className={styles.selectserver}>
       <p>Select a room:</p>
       <p><select value={id} onChange={(e)=>setid(e.target.value)}>
