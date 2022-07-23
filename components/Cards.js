@@ -112,7 +112,7 @@ export default function Cards(props){
                 ) }
                 
                 {cardstoplay.length!=0 && props.canPlay && props.table.length!=0 && (
-<Button  onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setcardstoplay([])}}>Play</Button>
+<Button  onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);props.setcardstoplay([])}}>Play</Button>
                 ) }
         </div>
    
