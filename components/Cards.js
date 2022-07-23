@@ -1,6 +1,7 @@
 import { Heading,Button,Select } from '@chakra-ui/react'
 import { useState } from 'react'
 import Image from 'next/image'
+import { motion, isValidMotionProp } from 'framer-motion'
 import {
     NumberInput,
     NumberInputField,
@@ -23,6 +24,7 @@ export default function Cards(props){
     const toast = useToast()
     const [numberas,setnumberas]=useState(1)
     const [openmodal,setopenmodal]=useState(false)
+    const [scaleLevel,setscaleLevel]=useState(0)
     const cards=props.cards
     const cardstoplay=props.cardstoplay
     function handleCardSelecting(cardOBJ){
