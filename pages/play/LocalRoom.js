@@ -28,6 +28,7 @@ export default function Play(props) {
     const [full,setfull]=useState(false)
     const [leaderBoard,setleaderBoard]=useState([])
     const toast = useToast()
+    const [cardstoplay,setcardstoplay]=useState([])
     const socketInitializer = async () => {
         
         await fetch('/api/socket');
@@ -115,7 +116,9 @@ export default function Play(props) {
         }
     }
     function lie(item) {
+        setcardstoplay([])
         socket.emit('ittihem', item)
+
     }
     useEffect(() => { socketInitializer();
         
@@ -168,10 +171,10 @@ export default function Play(props) {
                                 </div>
                             </GridItem>
                             <GridItem rowSpan={10} colSpan={1}>
-                                <Table table={table} lie={lie}/>
+                                <Table cardstoplay={cardstoplay} setcardstoplay={setcardstoplay} table={table} lie={lie}/>
                             </GridItem>
                             <GridItem rowSpan={10} colSpan={1}  style={{background:'rgba(255,255,255,.8)',borderRadius:'50px',boxShadow: '30px 35px 1vw rgba(0, 0, 0, 0.5)'}}>
-                                <Cards table={table}  cards={cards} canPlay={canPlay} playTurn={playTurn} setcards={setcards}/>
+                                <Cards cardstoplay={cardstoplay} setcardstoplay={setcardstoplay} table={table}  cards={cards} canPlay={canPlay} playTurn={playTurn} setcards={setcards}/>
                             </GridItem>
                         </Grid>
                     </GridItem>

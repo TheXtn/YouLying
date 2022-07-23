@@ -24,7 +24,7 @@ export default function Cards(props){
     const [numberas,setnumberas]=useState(1)
     const [openmodal,setopenmodal]=useState(false)
     const cards=props.cards
-    const [cardstoplay,setcardstoplay]=useState([])
+    const cardstoplay=props.cardstoplay
     function handleCardSelecting(cardOBJ){
       if (!props.canPlay){
         toast({
@@ -46,7 +46,7 @@ export default function Cards(props){
         })
         return
       }
-      setcardstoplay((prevCards)=>([...prevCards,cardOBJ]))
+      props.setcardstoplay((prevCards)=>([...prevCards,cardOBJ]))
       props.setcards(cards.filter((c)=>(c.id!=cardOBJ.id)))
       
     }
@@ -81,7 +81,7 @@ export default function Cards(props){
           </ModalBody>
 
           <ModalFooter> 
-            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setopenmodal(false);setcardstoplay([])}}>
+            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setopenmodal(false);props.setcardstoplay([])}}>
               Go
             </Button>
           
@@ -92,13 +92,14 @@ export default function Cards(props){
          
         
         <Heading>Cards to play :</Heading>
+                
         {cardstoplay.map((card)=>{
           return (
             
             
                 
                   <>
-                  <Image  height={"100px"} width={"100px"} src={'/Cards/'+card.suit+"/"+card.value+'.png'}></Image>
+                  <Image onClick={()=>{props.setcardstoplay(cardstoplay.filter((cc)=>(cc.id!=card.id)));props.setcards((PrevCards)=>([...PrevCards,card].sort((a, b) => a.value - b.value)))}}  height={"100px"} width={"100px"} src={'/Cards/'+card.suit+"/"+card.value+'.png'}></Image>
                   </>
                   
                 

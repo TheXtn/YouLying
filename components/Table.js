@@ -28,7 +28,9 @@ export default function Table(props){
         <br/>
         <br/>
         <br/>
-        {(table.length>0) && <Button colorScheme={"teal"} onClick={() => sleep(0).then(() => {props.lie(table[table.length-1])})}>Ya7chi fih</Button>}
+        {(table.length>0) && <Button colorScheme={"teal"} onClick={() => sleep(0).then(() => {props.lie(table[table.length-1]);
+        props.setcardstoplay([])
+        })}>Ya7chi fih</Button>}
         
     </div>
     )
