@@ -26,6 +26,16 @@ export default function Cards(props){
     const [card,setcard]=useState("")
     const [cardstoplay,setcardstoplay]=useState([])
     function handleselect(){
+      if (!card){
+        toast({
+          title: 'Card Error',
+          description: "Please select a valid card",
+          status: 'error',
+          duration: 3000,
+          isClosable: true,
+        })
+        return 
+      }
       if (cardstoplay.includes(card)){
         toast({
           title: 'Card Error',
@@ -67,7 +77,7 @@ export default function Cards(props){
         {openmodal?<Modal isOpen={openmodal} onClose={()=>setopenmodal(false)}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>You play this card as :</ModalHeader>
+          <ModalHeader>Play Card(s) as :</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
           <NumberInput onChange={(valueString) => setnumberas(parseInt(valueString))} defaultValue={1} min={1} max={13}>
