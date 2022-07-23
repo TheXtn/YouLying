@@ -411,6 +411,9 @@ const SocketHandler = (req, res) => {
       socket.on('disconnect', () => {
         console.log(socket.id + " disconnected")
         //get player from the connectedPlayers
+        if (!connectedPlayers.map((p)=>p.player_id).includes(socket.id)){
+          return 
+        }
         try {
           let player = connectedPlayers.find(player => player.player_id === socket.id)
           io.emit('logs', player.name + " disconnected")

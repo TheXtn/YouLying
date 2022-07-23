@@ -83,7 +83,7 @@ export default function Cards(props){
           </ModalBody>
 
           <ModalFooter> 
-            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setopenmodal(false);props.setcardstoplay([])}}>
+            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
               Go
             </Button>
           
@@ -114,7 +114,7 @@ export default function Cards(props){
                 ) }
                 
                 {cardstoplay.length!=0 && props.canPlay && props.table.length!=0 && (
-<Button  onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);props.setcardstoplay([])}}>Play</Button>
+<Button  onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);props.setcardstoplay([]);setnumberas(1)}}>Play</Button>
                 ) }
         </div>
    
