@@ -1,5 +1,6 @@
 import { Heading,Button,Select } from '@chakra-ui/react'
 import { useState } from 'react'
+import Image from 'next/image'
 import {
     NumberInput,
     NumberInputField,
@@ -23,28 +24,17 @@ export default function Cards(props){
     const [numberas,setnumberas]=useState(1)
     const [openmodal,setopenmodal]=useState(false)
     const cards=props.cards
-    const [card,setcard]=useState("")
     const [cardstoplay,setcardstoplay]=useState([])
-    function handleselect(){
-      if (!card){
+    function handleCardSelecting(cardOBJ){
+      if (!props.canPlay){
         toast({
           title: 'Card Error',
-          description: "Please select a valid card",
+          description: "Its not your turn !",
           status: 'error',
           duration: 3000,
           isClosable: true,
         })
-        return 
-      }
-      if (cardstoplay.includes(card)){
-        toast({
-          title: 'Card Error',
-          description: "Card Already Selected",
-          status: 'error',
-          duration: 3000,
-          isClosable: true,
-        })
-        return 
+        return
       }
       if (cardstoplay.length==3){
         toast({
@@ -56,21 +46,21 @@ export default function Cards(props){
         })
         return
       }
-      setcardstoplay((prevCards)=>([...prevCards,card]))
+      setcardstoplay((prevCards)=>([...prevCards,cardOBJ]))
+      props.setcards(cards.filter((c)=>(c.id!=cardOBJ.id)))
+      
     }
     return (
       
         <div style={{textAlign:'center'}}>
-          
-            <Heading>My cards : {cards.length}</Heading>
-                
-                <Select placeholder='Select card' value={card} onChange={(e)=>{setcard(e.target.value)}}>
-                {
+          {
                     cards.map((j) => {
-                        return (<><option value={j.id} >{j.name} of {j.suit}</option></>)
+                        return (<><Image onClick={()=>{handleCardSelecting(j)}}  height={"100px"} width={"100px"} src={'/Cards/'+j.suit+"/"+j.value+'.png'}></Image></>)
                     })
                 }
-            </Select>
+            <Heading>My cards : {cards.length}</Heading>
+                
+                
               
         
                 
@@ -91,7 +81,7 @@ export default function Cards(props){
           </ModalBody>
 
           <ModalFooter> 
-            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(cardstoplay,numberas);setopenmodal(false);setcardstoplay([])}}>
+            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setopenmodal(false);setcardstoplay([])}}>
               Go
             </Button>
           
@@ -99,21 +89,21 @@ export default function Cards(props){
         </ModalContent>
                
                 </Modal>:""}
-          {props.canPlay && <Button onClick={()=>{handleselect()}}>Select this card</Button>}
+         
         
         <Heading>Cards to play :</Heading>
         {cardstoplay.map((card)=>{
           return (
-            cards.map((c)=>{
-              if (c.id==card){
-                return(
-                  <Heading color={"whatsapp.100"}>
-                  {c.value} of {c.suit}
-                  </Heading>
+            
+            
+                
+                  <>
+                  <Image  height={"100px"} width={"100px"} src={'/Cards/'+card.suit+"/"+card.value+'.png'}></Image>
+                  </>
                   
-                )
-              }
-            })
+                
+              
+            
           )
         })}
           {cardstoplay?.length!=0 && props.canPlay && props.table.length==0 && (
@@ -121,7 +111,7 @@ export default function Cards(props){
                 ) }
                 
                 {cardstoplay.length!=0 && props.canPlay && props.table.length!=0 && (
-<Button  onClick={()=>{props.playTurn(cardstoplay,numberas);setcardstoplay([])}}>Play</Button>
+<Button  onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setcardstoplay([])}}>Play</Button>
                 ) }
         </div>
    

@@ -162,16 +162,16 @@ export default function Play(props) {
                         templateColumns='repeat(1, 1fr)'
                         gap={10}
                         >
-                            <GridItem rowSpan={2} colSpan={1} style={{background:'rgba(0,255,109,0.6)',borderRadius:'50px',boxShadow: '30px 35px 1vw rgba(0, 0, 0, 0.5)'}}>
+                            <GridItem rowSpan={4} colSpan={1} style={{background:'rgba(0,255,109,0.6)',borderRadius:'50px',boxShadow: '30px 35px 1vw rgba(0, 0, 0, 0.5)'}}>
                                 <div style={{textAlign:'center',fontSize:"40px",marginTop:'5%',color:'white'}}>
                                     <b>{turn} Yal3ab</b>
                                 </div>
                             </GridItem>
-                            <GridItem rowSpan={4} colSpan={1}>
+                            <GridItem rowSpan={10} colSpan={1}>
                                 <Table table={table} lie={lie}/>
                             </GridItem>
-                            <GridItem rowSpan={3} colSpan={1}  style={{background:'rgba(255,255,255,.8)',borderRadius:'50px',boxShadow: '30px 35px 1vw rgba(0, 0, 0, 0.5)'}}>
-                                <Cards table={table}  cards={cards} canPlay={canPlay} playTurn={playTurn}/>
+                            <GridItem rowSpan={10} colSpan={1}  style={{background:'rgba(255,255,255,.8)',borderRadius:'50px',boxShadow: '30px 35px 1vw rgba(0, 0, 0, 0.5)'}}>
+                                <Cards table={table}  cards={cards} canPlay={canPlay} playTurn={playTurn} setcards={setcards}/>
                             </GridItem>
                         </Grid>
                     </GridItem>

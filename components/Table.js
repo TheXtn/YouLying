@@ -4,7 +4,7 @@ import Image from 'next/image'
 
 export default function Table(props){
     const table=props.table
-    let cardOnTable = "/../public/card back side.png"
+    let cardOnTable = "/card back side.png"
     if (table.length==0){cardOnTable ="/../public/card back side.png"}
     function sleep (time) {
         return new Promise((resolve) => setTimeout(resolve, time));
@@ -14,8 +14,12 @@ export default function Table(props){
         <Heading style={{color:'white'}}>Table</Heading>
         <br/>
         <div style={{color:'white'}}>
-        {table.length>1 ? <p>{table[table.length-2].player_name} played {table[table.length-2].as}</p> : <br/>}
-        {table.length>0 && <b style={{fontSize:'30px'}}>{table[table.length-1].player_name} played {table[table.length-1].as}</b>}
+        
+        {table.map((item)=>{
+            return(
+                <p key={item.player_name}>{item.player_name} played {item.as}</p>
+            )
+        })}
         </div>
         <br/>
         <br/>
