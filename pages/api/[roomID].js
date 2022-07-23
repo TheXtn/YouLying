@@ -330,7 +330,7 @@ const SocketHandler = (req, res) => {
 
         if (allEqual == false) {
           //kenou tla3 berrasmi yekdheb:
-          io.emit('jad3lik')
+          io.emit('jad3lik',"https://audio.jukehost.co.uk/C269dCXnfM0KmdwrqusnwW7PoggQLJn0")
           //push the table cards to player hand
           player.cards.push(...table)
           //empty the table
@@ -352,7 +352,7 @@ const SocketHandler = (req, res) => {
 
         } else {
           //ken tla3 mouch yekdheb:
-          io.emit('jad3lik')
+          io.emit('jad3lik',"https://www.mboxdrive.com/jad3lik.mp3")
           let sada9 = connectedPlayers.find(player => player.player_id === player_id)
 
           io.to(sada9.player_id).emit("yourTurn")

@@ -29,9 +29,10 @@ export default function Play(props) {
     const toast = useToast()
     const [cardstoplay,setcardstoplay]=useState([])
     const [win,setwin]=useState(false)
+    const roomID=props.roomID
     const socketInitializer = async () => {
         
-        await fetch('/api/socket');
+        await fetch('/api/'+roomID);
         socket = io()
         socket.on('connect', () => {
             console.log("connected")
@@ -102,8 +103,8 @@ export default function Play(props) {
         socket.on('update-leaderBoard', (res) => {
             setleaderBoard(res)
         })
-        socket.on("jad3lik",()=>{
-            const audio = new Audio("https://www.mboxdrive.com/jad3lik.mp3")
+        socket.on("jad3lik",(link)=>{
+            const audio = new Audio(link)
         audio.play()
         })
     }
@@ -123,7 +124,9 @@ export default function Play(props) {
         socket.emit('ittihem', item)
 
     }
-    useEffect(() => { socketInitializer();
+    useEffect(() => { 
+        console.log(roomID)
+        socketInitializer();
         
     }, [])
     if (full){
