@@ -16,7 +16,6 @@ import Leaders from "../../components/Leaders";
 let socket;
 
 export default function Play(props) {
-    
     const [taksir, setTaksir] = useState([]);
     const [players, setplayers] = useState([])
     const [cards, setcards] = useState([])
@@ -125,8 +124,7 @@ export default function Play(props) {
 
     }
     useEffect(() => { socketInitializer();
-        const audio = new Audio("https://cdn.sndup.net/vzz3/tehchifyhkahwa.mp3?token=lijcdZqkrUmESxqUVbLsf_SuNYEwc06hMb9zqDwTqZs&token_path=%2Fvzz3%2F&expires=1658596117")
-        audio.play()
+        
     }, [])
     if (full){
         return(
