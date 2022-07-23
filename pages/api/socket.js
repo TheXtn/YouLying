@@ -204,6 +204,7 @@ function moveTurnToTheNextPlayer(players, currentPlayer, io) {
   currentPlayer = nextPlayer;
   if (currentPlayer.cards.length <= 0) {
     io.emit("logs", "Player " + currentPlayer.name + " Won !")
+    io.to(currentPlayer.player_id).emit("update-win")
     io.to(currentPlayer.player_id).emit('removeTurn')
     let nextPlayerIndex = players.findIndex(player => player.player_id === currentPlayer.player_id) + 1;
     if (nextPlayerIndex === players.length) {
@@ -366,6 +367,7 @@ const SocketHandler = (req, res) => {
             io.emit("logs", "Player " + sada9.name + " Won")
             leaderBoard.push(sada9)
             io.emit('update-leaderBoard', leaderBoard)
+            io.to(sada9.player_id).emit("update-win")
             connectedPlayers = connectedPlayers.filter((p) => (p.player_id != sada9.player_id))
           }
           io.emit("whoplaying", currentPlayer.name)

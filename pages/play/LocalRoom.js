@@ -29,6 +29,7 @@ export default function Play(props) {
     const [leaderBoard,setleaderBoard]=useState([])
     const toast = useToast()
     const [cardstoplay,setcardstoplay]=useState([])
+    const [win,setwin]=useState(false)
     const socketInitializer = async () => {
         
         await fetch('/api/socket');
@@ -74,6 +75,9 @@ export default function Play(props) {
         socket.on('whoplaying',(res)=>{
             
             setturn(res)
+        })
+        socket.on("update-win",()=>{
+            setwin(true)
         })
         socket.on("update-table", (tab) => {
             settable(tab)
@@ -121,7 +125,8 @@ export default function Play(props) {
 
     }
     useEffect(() => { socketInitializer();
-        
+        const audio = new Audio("https://cdn.sndup.net/vzz3/tehchifyhkahwa.mp3?token=lijcdZqkrUmESxqUVbLsf_SuNYEwc06hMb9zqDwTqZs&token_path=%2Fvzz3%2F&expires=1658596117")
+        audio.play()
     }, [])
     if (full){
         return(
@@ -171,7 +176,7 @@ export default function Play(props) {
                                 </div>
                             </GridItem>
                             <GridItem rowSpan={10} colSpan={1}>
-                                <Table cardstoplay={cardstoplay} setcardstoplay={setcardstoplay} table={table} lie={lie}/>
+                                <Table win={win} cardstoplay={cardstoplay} setcardstoplay={setcardstoplay} table={table} lie={lie}/>
                             </GridItem>
                             <GridItem rowSpan={10} colSpan={1}  style={{background:'rgba(255,255,255,.8)',borderRadius:'50px',boxShadow: '30px 35px 1vw rgba(0, 0, 0, 0.5)'}}>
                                 <Cards cardstoplay={cardstoplay} setcardstoplay={setcardstoplay} table={table}  cards={cards} canPlay={canPlay} playTurn={playTurn} setcards={setcards}/>
