@@ -73,19 +73,22 @@ export default function Play(props) {
             setcanPlay(true)
         })
         socket.on('whoplaying', (res) => {
-
+            setcardstoplay([])
             setturn(res)
         })
         socket.on("update-win", () => {
             setwin(true)
         })
         socket.on("update-table", (tab) => {
+            setcardstoplay([])
             settable(tab)
         })
         socket.on('update-hand', (res) => {
+            setcardstoplay([])
             setcards(res)
         })
         socket.on('removeTurn', () => {
+            setcardstoplay([])
             setcanPlay(false)
         })
         socket.on('close-game', (res) => {
