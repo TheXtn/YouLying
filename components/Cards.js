@@ -123,7 +123,7 @@ export default function Cards(props){
           </ModalBody>
 
           <ModalFooter> 
-            <Button colorScheme='blue' mr={3} >
+            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
               Go
             </Button>
           

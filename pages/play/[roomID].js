@@ -232,7 +232,7 @@ export default function Play(props) {
                                 <Text><b style={{ fontSize: '1.5rem', color: 'white' }}>Nickname</b></Text>
                                 <p><Input value={id} onChange={(e) => setid(e.target.value)} /></p>
                             </div>
-                            <Button>Play</Button>
+                            <Button onClick={() => { play() }}>Play</Button>
                         </VStack>
                     </Box>
                 </Flex>
