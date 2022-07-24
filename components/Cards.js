@@ -1,7 +1,7 @@
 import { Heading,Button,Select } from '@chakra-ui/react'
 import { useState } from 'react'
 import Image from 'next/image'
-import { motion, isValidMotionProp } from 'framer-motion'
+import { motion, isValidMotionProp,AnimatePresence } from 'framer-motion'
 import {
     NumberInput,
     NumberInputField,
@@ -21,6 +21,7 @@ import {
     ModalCloseButton,
   } from '@chakra-ui/react'
 export default function Cards(props){
+    const [xan,setxan]=useState(0)
     const toast = useToast()
     const [numberas,setnumberas]=useState(1)
     const [openmodal,setopenmodal]=useState(false)
@@ -48,18 +49,20 @@ export default function Cards(props){
         })
         return
       }
+      setxan(50)
       props.setcardstoplay((prevCards)=>([...prevCards,cardOBJ]))
       props.setcards(cards.filter((c)=>(c.id!=cardOBJ.id)))
       
     }
     return (
       
-        <div style={{textAlign:'center'}}>
+        <motion.div layout  style={{textAlign:'center'}}>
+          <AnimatePresence>
           {
                     cards.map((j) => {
-                        return (<><Image onClick={()=>{handleCardSelecting(j)}}  height={"100px"} width={"100px"} src={'/Cards/'+j.suit+"/"+j.value+'.png'}></Image></>)
+                        return (<motion.button  layout  animate={{rotate:360}} key={j.id} whileHover={{ scale: 1.5 }}   transition={{type:'spring',stiffness:300}}><Image onClick={()=>{handleCardSelecting(j)}}  height={"100px"} width={"100px"} src={'/Cards/'+j.suit+"/"+j.value+'.png'}></Image></motion.button>)
                     })
-                }
+                }</AnimatePresence>
             <Heading>My cards : {cards.length}</Heading>
                 
                 
@@ -93,22 +96,25 @@ export default function Cards(props){
                 </Modal>:""}
          
         
+       
+      
         <Heading>Cards to play :</Heading>
-                
+          
         {cardstoplay.map((card)=>{
           return (
             
-            
+           
                 
-                  <>
+                  <motion.button layout  key={card.id} whileHover={{opacity:0.3}}>
                   <Image onClick={()=>{props.setcardstoplay(cardstoplay.filter((cc)=>(cc.id!=card.id)));props.setcards((PrevCards)=>([...PrevCards,card].sort((a, b) => a.value - b.value)))}}  height={"100px"} width={"100px"} src={'/Cards/'+card.suit+"/"+card.value+'.png'}></Image>
-                  </>
-                  
-                
+                  </motion.button>
               
             
           )
         })}
+     
+                  
+                 
           {cardstoplay?.length!=0 && props.canPlay && props.table.length==0 && (
 <Button  onClick={()=>{setopenmodal(true)}}>Play</Button>
                 ) }
@@ -116,7 +122,7 @@ export default function Cards(props){
                 {cardstoplay.length!=0 && props.canPlay && props.table.length!=0 && (
 <Button  onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);props.setcardstoplay([]);setnumberas(1)}}>Play</Button>
                 ) }
-        </div>
+        </motion.div>
    
     )
 }
