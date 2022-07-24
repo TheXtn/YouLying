@@ -224,6 +224,8 @@ function moveTurnToTheNextPlayer(players, currentPlayer, io) {
   return currentPlayer;
 }
 function startTheGameMainFunction(socket, io, connectedPlayers, currentPlayer) {
+  table = []
+  leaderBoard = []
   console.log("jaryaa !!")
   //let currentPlayerTurnId = connectedPlayers[0].player_id
   getCards(connectedPlayers);
