@@ -108,6 +108,7 @@ export default function Cards(props){
         {openmodal?<Modal isOpen={openmodal} onClose={()=>setopenmodal(false)}>
         <ModalOverlay />
         <ModalContent>
+          <form onSubmit={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
           <ModalHeader>Play Card(s) as :</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -122,11 +123,12 @@ export default function Cards(props){
           </ModalBody>
 
           <ModalFooter> 
-            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+            <Button colorScheme='blue' mr={3} >
               Go
             </Button>
           
           </ModalFooter>
+          </form>
         </ModalContent>
                
                 </Modal>:""}

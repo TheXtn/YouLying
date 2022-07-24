@@ -223,7 +223,7 @@ export default function Play(props) {
             <br />
             <br />
             <Container>
-
+                <form onSubmit={() => { play() }}>
                 <Flex spacing={10}>
                     <Box shadow={"xl"} spacing={20} w={"full"} margin={10}>
                         <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"center"} >
@@ -232,11 +232,11 @@ export default function Play(props) {
                                 <Text><b style={{ fontSize: '1.5rem', color: 'white' }}>Nickname</b></Text>
                                 <p><Input value={id} onChange={(e) => setid(e.target.value)} /></p>
                             </div>
-                            <Button onClick={() => { play() }}>Play</Button>
+                            <Button>Play</Button>
                         </VStack>
                     </Box>
                 </Flex>
-
+                </form>
             </Container>
         </div>
     )
