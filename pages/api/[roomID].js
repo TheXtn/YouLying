@@ -416,14 +416,13 @@ const SocketHandler = (req, res) => {
         }
         try {
           let player = connectedPlayers.find(player => player.player_id === socket.id)
-          io.emit('logs', player.name + " disconnected")
+          io.emit('close-game', player.name + " disconnected")
         } catch (e) {
           console.log(e)
         }
         //delete player from connected players
         connectedPlayers = connectedPlayers.filter(player => player.player_id !== socket.id)
         io.emit('update-player', connectedPlayers)
-        io.emit("close-game")
         table = []
         connectedPlayers.map((player) => {
           socket.disconnect(player.player_id)

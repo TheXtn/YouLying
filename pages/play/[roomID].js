@@ -93,7 +93,7 @@ export default function Play(props) {
             toast.closeAll
             toast({
                 title: 'Notification.',
-                description: "A player has disconnected game will finish",
+                description: res,
                 status: 'error',
                 duration: 4000,
                 isClosable: true,
