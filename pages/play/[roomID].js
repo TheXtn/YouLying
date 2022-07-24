@@ -186,7 +186,7 @@ export default function Play(props) {
                     </GridItem>
                     <GridItem rowSpan={2} colSpan={3}>
                         <Grid
-                            h='100vh'
+                            h='0vh'
                             templateRows='repeat(8, 1fr)'
                             templateColumns='repeat(1, 1fr)'
                             gap={10}
@@ -196,10 +196,10 @@ export default function Play(props) {
                                     <b>{turn} Yal3ab</b>
                                 </div>
                             </GridItem>
-                            <GridItem rowSpan={10} colSpan={1}>
+                            <GridItem rowSpan={8} colSpan={1}>
                                 <Table win={win} cardstoplay={cardstoplay} setcardstoplay={setcardstoplay} table={table} lie={lie} />
                             </GridItem>
-                            <GridItem rowSpan={10} colSpan={1} style={{ background: 'rgba(255,255,255,.8)', borderRadius: '50px', boxShadow: '30px 35px 1vw rgba(0, 0, 0, 0.5)' }}>
+                            <GridItem rowSpan={10} colSpan={1} style={{ background: 'rgba(255,255,255,0)', borderRadius: '50px'}}>
                                 <Cards cardstoplay={cardstoplay} setcardstoplay={setcardstoplay} table={table} cards={cards} canPlay={canPlay} playTurn={playTurn} setcards={setcards} />
                             </GridItem>
                         </Grid>

@@ -1,4 +1,5 @@
 import { Heading,Button,Select } from '@chakra-ui/react'
+import { Grid, GridItem } from '@chakra-ui/react'
 import { useState } from 'react'
 import Image from 'next/image'
 import { motion, isValidMotionProp,AnimatePresence } from 'framer-motion'
@@ -58,13 +59,47 @@ export default function Cards(props){
     return (
       
         <motion.div layout  style={{textAlign:'center'}}>
+          <Grid
+                    h='45vh'
+                    templateRows='repeat(2, 1fr)'
+                    templateColumns='repeat(1, 1fr)'
+                    gap={0}
+                >
+                <GridItem rowSpan={1} colSpan={1}>
+        <AnimatePresence>
+        {cardstoplay.map((card)=>{
+          return (
+            
+           
+                
+                  <motion.button  initial={{}} layout  key={card.id} whileHover={{opacity:0.3}}>
+                  <Image onClick={()=>{props.setcardstoplay(cardstoplay.filter((cc)=>(cc.id!=card.id)));props.setcards((PrevCards)=>([...PrevCards,card].sort((a, b) => a.value - b.value)))}}  height={"100px"} width={"100px"} src={'/Cards/'+card.suit+"/"+card.value+'.png'}></Image>
+                  </motion.button>
+              
+            
+          )
+        })}
+      </AnimatePresence>
+      {cardstoplay?.length!=0 && props.canPlay && props.table.length==0 &&
+<div><br/><Button width={'10rem'} onClick={()=>{setopenmodal(true)}}>Play</Button></div>
+                }
+                
+                {cardstoplay.length!=0 && props.canPlay && props.table.length!=0 ?
+<div><br/><Button width={'10rem'}  onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);props.setcardstoplay([]);setnumberas(1)}}>Play</Button></div>
+                : <><br/></> }
+                </GridItem>
+
+
+                <GridItem rowSpan={1} colSpan={1} style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '50px' }}>
+                
+                <Heading style={{color:'white'}}>My cards {cards.length}</Heading>
           <AnimatePresence>
           {
                     cards.map((j) => {
                         return (<motion.button   layout   animate={{rotate:360}} key={j.id} whileHover={{ scale: 1.5 }}   transition={{type:'spring',stiffness:300}}><Image onClick={()=>{handleCardSelecting(j)}}  height={"100px"} width={"100px"} src={'/Cards/'+j.suit+"/"+j.value+'.png'}></Image></motion.button>)
                     })
                 }</AnimatePresence>
-            <Heading>My cards : {cards.length}</Heading>
+                </GridItem>
                 
                 
               
@@ -99,30 +134,9 @@ export default function Cards(props){
         
        
       
-        <Heading>Cards to play :</Heading>
-        <AnimatePresence>
-        {cardstoplay.map((card)=>{
-          return (
-            
-           
-                
-                  <motion.button  initial={{}} layout  key={card.id} whileHover={{opacity:0.3}}>
-                  <Image onClick={()=>{props.setcardstoplay(cardstoplay.filter((cc)=>(cc.id!=card.id)));props.setcards((PrevCards)=>([...PrevCards,card].sort((a, b) => a.value - b.value)))}}  height={"100px"} width={"100px"} src={'/Cards/'+card.suit+"/"+card.value+'.png'}></Image>
-                  </motion.button>
-              
-            
-          )
-        })}
-      </AnimatePresence>
-                  
-                 
-          {cardstoplay?.length!=0 && props.canPlay && props.table.length==0 && (
-<Button  onClick={()=>{setopenmodal(true)}}>Play</Button>
-                ) }
-                
-                {cardstoplay.length!=0 && props.canPlay && props.table.length!=0 && (
-<Button  onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);props.setcardstoplay([]);setnumberas(1)}}>Play</Button>
-                ) }
+        
+          </Grid>
+    
         </motion.div>
    
     )
