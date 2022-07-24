@@ -21,6 +21,7 @@ import {
     ModalCloseButton,
   } from '@chakra-ui/react'
 export default function Cards(props){
+    const [anim,setanim]=useState([0,0,0])
     const [xan,setxan]=useState(0)
     const toast = useToast()
     const [numberas,setnumberas]=useState(1)
@@ -60,7 +61,7 @@ export default function Cards(props){
           <AnimatePresence>
           {
                     cards.map((j) => {
-                        return (<motion.button  layout  animate={{rotate:360}} key={j.id} whileHover={{ scale: 1.5 }}   transition={{type:'spring',stiffness:300}}><Image onClick={()=>{handleCardSelecting(j)}}  height={"100px"} width={"100px"} src={'/Cards/'+j.suit+"/"+j.value+'.png'}></Image></motion.button>)
+                        return (<motion.button   layout   animate={{rotate:360}} key={j.id} whileHover={{ scale: 1.5 }}   transition={{type:'spring',stiffness:300}}><Image onClick={()=>{handleCardSelecting(j)}}  height={"100px"} width={"100px"} src={'/Cards/'+j.suit+"/"+j.value+'.png'}></Image></motion.button>)
                     })
                 }</AnimatePresence>
             <Heading>My cards : {cards.length}</Heading>
@@ -99,20 +100,20 @@ export default function Cards(props){
        
       
         <Heading>Cards to play :</Heading>
-          
+        <AnimatePresence>
         {cardstoplay.map((card)=>{
           return (
             
            
                 
-                  <motion.button layout  key={card.id} whileHover={{opacity:0.3}}>
+                  <motion.button  initial={{}} layout  key={card.id} whileHover={{opacity:0.3}}>
                   <Image onClick={()=>{props.setcardstoplay(cardstoplay.filter((cc)=>(cc.id!=card.id)));props.setcards((PrevCards)=>([...PrevCards,card].sort((a, b) => a.value - b.value)))}}  height={"100px"} width={"100px"} src={'/Cards/'+card.suit+"/"+card.value+'.png'}></Image>
                   </motion.button>
               
             
           )
         })}
-     
+      </AnimatePresence>
                   
                  
           {cardstoplay?.length!=0 && props.canPlay && props.table.length==0 && (
