@@ -11,7 +11,8 @@ export default function Table(props){
       }
     return (
         <div style={{textAlign:'center'}}>
-        <Heading style={{color:'white'}}>Table</Heading>
+        <br/>
+        <br/>
         <br/>
         <Flex spacing={10}>
         <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"center"} >

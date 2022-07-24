@@ -90,7 +90,7 @@ export default function Cards(props){
                 </GridItem>
 
 
-                <GridItem rowSpan={1} colSpan={1} style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '50px' }}>
+                <GridItem rowSpan={1} colSpan={1} style={{ background: 'rgba(0,0,0,0.5)', borderRadius: '50px' }}>
                 
                 <Heading style={{color:'white'}}>My cards {cards.length}</Heading>
           <AnimatePresence>

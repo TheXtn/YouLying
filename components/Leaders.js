@@ -7,7 +7,7 @@ export default function Leadears(props){
                 {leaders.map((item,index) => {
 
                     return (
-                        <Text key={item.name}>{item.name} is number {index + 1}</Text>
+                        <Text key={item.name}>#{index + 1}  {item.name}</Text>
 
                     )
 
