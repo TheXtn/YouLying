@@ -111,23 +111,47 @@ export default function Cards(props){
           <form onSubmit={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
           <ModalHeader>Play Card(s) as :</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
-          <NumberInput onChange={(valueString) => setnumberas(parseInt(valueString))} defaultValue={1} min={1} max={13}>
-
-  <NumberInputField />
-  <NumberInputStepper>
-    <NumberIncrementStepper />
-    <NumberDecrementStepper />
-  </NumberInputStepper>
-</NumberInput>
+          <ModalBody style={{textAlign:'center'}}>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),1);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  A
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),2);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  2
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),3);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  3
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),4);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  4
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),5);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  5
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),6);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  6
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),7);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  7
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),8);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  8
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),9);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  9
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),10);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  10
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),11);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  J
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),12);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  Q
+                </Button>
+                <Button colorScheme='blue' mr={3} onClick={() =>{props.playTurn(cardstoplay.map((card)=>(card.id)),13);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
+                  K
+                </Button>                
           </ModalBody>
-
-          <ModalFooter> 
-            <Button colorScheme='blue' mr={3} onClick={()=>{props.playTurn(cardstoplay.map((card)=>(card.id)),numberas);setopenmodal(false);props.setcardstoplay([]);setnumberas(1)}}>
-              Go
-            </Button>
-          
-          </ModalFooter>
           </form>
         </ModalContent>
                
