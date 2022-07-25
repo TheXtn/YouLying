@@ -200,7 +200,7 @@ const SocketHandler = (req, res) => {
           updatetable([], selectedRoom.name);
           checkTaksir(selectedRoom.players, socket, io);
           jarya(selectedRoom.players, io);
-          io.to(selectedRoom.name).emit("update-table", table);
+          io.to(selectedRoom.name).emit("update-table", selectedRoom.table);
         }
       });
       // not working
@@ -212,7 +212,7 @@ const SocketHandler = (req, res) => {
           }
         });
         updatetable([]);
-        socket.emit("update-table", table);
+        socket.emit("update-table", selectedRoom.table);
       });
       socket.on("addplayer", (data) => {
         let player = {

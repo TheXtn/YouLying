@@ -182,6 +182,7 @@ function sortCards(players) {
 }
 // ? Doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 export function checkTaksir(players, socket, io) {
+  let selectedRoom=rooms.find((r)=>r.name==players[0].roomName)
   const { roomName } = players[0];
   sortCards(players);
   players.forEach((player) => {
@@ -202,7 +203,7 @@ export function checkTaksir(players, socket, io) {
         const sameCards = player.cards.splice(index - 2, 4);
         sameCards.forEach((card) => {
           card.player = player.name;
-          brokenCards.push(card);
+          selectedRoom.brokenCards.push(card);
         });
         sameCardsNumber = 0;
       }
