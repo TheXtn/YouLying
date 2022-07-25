@@ -127,7 +127,7 @@ const SocketHandler = (req, res) => {
               card.value +
               " as " +
               lastPlayedCard.as +
-              " All cards is going to him"
+              " All cards are going to him"
           );
           checkTaksir(selectedRoom.players, socket, io);
           jarya(selectedRoom.players, io);
@@ -194,7 +194,7 @@ const SocketHandler = (req, res) => {
           player.cards.push(...selectedRoom.table);
           io.to(selectedRoom.name).emit(
             "logs",
-            "All cards is going to " + player.name
+            "All cards are going to " + player.name
           );
           //empty the table
           updatetable([], selectedRoom.name);
