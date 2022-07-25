@@ -20,7 +20,7 @@ export default function Table(props){
        
         {table.map((item)=>{
             return(
-                <p key={item.player_name} style={{display:'flex'}}>{item.player_name} played :    {item.as!=11 && item.as!=12 && item.as!=13 ? item.as:<p></p>} {item.as==11 ? <p>J</p>:<p></p>} {item.as==12 ? <p>Q</p>:<p></p>} {item.as==13 ? <p>K</p>:<p></p>}</p>
+                <p key={item.player_name} style={{display:'flex'}}>{item.player_name} played :    {item.as!=11 && item.as!=12 && item.as!=13 && item.as!=1 ? item.as:<p></p>} {item.as==1 ? <p>A</p>:<p></p>} {item.as==11 ? <p>J</p>:<p></p>} {item.as==12 ? <p>Q</p>:<p></p>} {item.as==13 ? <p>K</p>:<p></p>}</p>
             )
         })}
         </div>
