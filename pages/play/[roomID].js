@@ -128,7 +128,7 @@ export default function Play(props) {
     });
   };
   function playTurn(Cardstoplay, numberas) {
-    if (table.length == 0) {
+    if (table?.length == 0) {
       socket.emit("playingTurn", Cardstoplay, id, numberas);
       //setcanPlay(!canPlay)
     } else {
