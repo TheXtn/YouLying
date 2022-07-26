@@ -72,7 +72,7 @@ export default function Cards(props){
             
            
                 
-                  <motion.button  initial={{}} layout  key={card.id} whileHover={{opacity:0.3}}>
+                  <motion.button    initial={{}} layout  key={card.id} whileHover={{opacity:0.3}}>
                   <Image onClick={()=>{props.setcardstoplay(cardstoplay.filter((cc)=>(cc.id!=card.id)));props.setcards((PrevCards)=>([...PrevCards,card].sort((a, b) => a.value - b.value)))}}  height={"100px"} width={"100px"} src={'/Cards/'+card.suit+"/"+card.value+'.png'}></Image>
                   </motion.button>
               

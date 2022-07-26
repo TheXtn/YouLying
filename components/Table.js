@@ -1,7 +1,7 @@
 import { Heading,Button,Flex,VStack } from '@chakra-ui/react'
 import { useState } from 'react'
 import Image from 'next/image'
-
+import { motion } from "framer-motion"
 export default function Table(props){
     const table=props.table
     let cardOnTable = "/card back side.png"
