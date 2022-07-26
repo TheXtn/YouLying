@@ -28,11 +28,11 @@ let socket;
 const rooms = [
   {
     id: 1,
-    name: "Room 1 (4 players)",
+    name: "Room 1",
   },
   {
     id: 1,
-    name: "Room 2 (3 players)",
+    name: "Room 2",
   },
 ];
 export default function Play(props) {
@@ -302,7 +302,7 @@ export default function Play(props) {
                 </Heading>
                 <div style={{ textAlign: "center" }}>
                   <Select
-
+                    
                     placeholder="Select a room"
                     onChange={(event) => {
                       setSelectedRoom(event.target.value);
