@@ -21,8 +21,11 @@ import io from "socket.io-client";
 import Table from "../../components/Table";
 import Board from "../../components/Board";
 import Cards from "../../components/Cards";
+import Player from "../../components/Player";
 import Taksir from "../../components/Taksir";
 import Leaders from "../../components/Leaders";
+import { MotionConfig } from "framer-motion";
+import { motion } from "framer-motion";
 let socket;
 const rooms = [
   {
@@ -168,30 +171,34 @@ export default function Play(props) {
       <div className={styles.body}>
         <Grid
           h="100vh"
-          templateRows="repeat(2, 1fr)"
-          templateColumns="repeat(5, 1fr)"
+          w="100%"
+          templateRows="repeat(1, 1fr)"
+          templateColumns="repeat(3, 1fr)"
           gap={30}
         >
-          <GridItem
-            rowSpan={2}
-            colSpan={1}
-            style={{
-              background: "rgba(255,255,255,0.1)",
-              borderRadius: "50px",
-              boxShadow: "20px 1px 1vw rgba(0, 0, 0, 0.5)",
-            }}
-          >
+          <GridItem>
             <Grid
-              h="100vh"
-              templateRows="repeat(2, 1fr)"
-              templateColumns="repeat(1, 1fr)"
-              gap={0}
+            h="100vh"
+            templateRows="repeat(3, 1fr)"
+            templateColumns="repeat(1, 1fr)"
+            gap={10}
             >
-              <GridItem rowSpan={1} colSpan={1}>
+              <GridItem style={{
+                          background: "rgba(255,255,255,0.1)",
+                          borderRadius: "50px",
+                          boxShadow: "20px 1px 1vw rgba(0, 0, 0, 0.5)",
+                        }}
+              >
                 <Board players={players} />
               </GridItem>
-              <GridItem rowSpan={1} colSpan={1}>
-                <div style={{ textAlign: "center", color: "white" }}>
+              <GridItem bg='green'/>
+              <GridItem style={{
+                          background: "rgba(255,255,255,0.1)",
+                          borderRadius: "50px",
+                          boxShadow: "20px 1px 1vw rgba(0, 0, 0, 0.5)",
+                        }}
+              >
+              <div style={{ textAlign: "center", color: "white" }}>
                   ___________________________________________
                   <br />
                   <b style={{ fontSize: "50px" }}>LeaderBoard</b>
@@ -200,22 +207,50 @@ export default function Play(props) {
               </GridItem>
             </Grid>
           </GridItem>
-          <GridItem rowSpan={2} colSpan={3}>
+          <GridItem>
             <Grid
-              h="0vh"
-              templateRows="repeat(8, 1fr)"
-              templateColumns="repeat(1, 1fr)"
-              gap={10}
+            h="100vh"
+            templateRows="repeat(3, 1fr)"
+            templateColumns="repeat(1, 1fr)"
+            gap={0}
             >
-              <GridItem
-                rowSpan={4}
-                colSpan={1}
-                style={{
+              <GridItem bg='green'>
+                
+              </GridItem>
+              <GridItem>
+                <Table
+                    win={win}
+                    cardstoplay={cardstoplay}
+                    setcardstoplay={setcardstoplay}
+                    table={table}
+                    lie={lie}
+                  />
+                </GridItem>
+              <GridItem>
+              <Cards
+                    cardstoplay={cardstoplay}
+                    setcardstoplay={setcardstoplay}
+                    table={table}
+                    cards={cards}
+                    canPlay={canPlay}
+                    playTurn={playTurn}
+                    setcards={setcards}
+                  />
+              </GridItem>
+            </Grid>
+          </GridItem>
+          <GridItem >
+          <Grid
+            h="100vh"
+            templateRows="repeat(3, 1fr)"
+            templateColumns="repeat(1, 1fr)"
+            gap={10}
+            >
+              <GridItem style={{
                   background: "rgba(0,255,109,0.6)",
                   borderRadius: "50px",
                   boxShadow: "30px 35px 1vw rgba(0, 0, 0, 0.5)",
-                }}
-              >
+                }}>
                 <div
                   style={{
                     textAlign: "center",
@@ -225,47 +260,17 @@ export default function Play(props) {
                   }}
                 >
                   <b>{turn} Yal3ab</b>
-                </div>
+                </div>    
               </GridItem>
-              <GridItem rowSpan={8} colSpan={1}>
-                <Table
-                  win={win}
-                  cardstoplay={cardstoplay}
-                  setcardstoplay={setcardstoplay}
-                  table={table}
-                  lie={lie}
-                />
-              </GridItem>
-              <GridItem
-                rowSpan={10}
-                colSpan={1}
-                style={{
-                  background: "rgba(255,255,255,0)",
-                  borderRadius: "50px",
-                }}
-              >
-                <Cards
-                  cardstoplay={cardstoplay}
-                  setcardstoplay={setcardstoplay}
-                  table={table}
-                  cards={cards}
-                  canPlay={canPlay}
-                  playTurn={playTurn}
-                  setcards={setcards}
-                />
+              <GridItem bg='green'/>
+              <GridItem style={{
+                background: "rgba(255,255,255,0.1)",
+                borderRadius: "50px",
+                boxShadow: "20px 1px 1vw rgba(0, 0, 0, 0.5)",
+              }}>
+                <Taksir taksir={taksir} />
               </GridItem>
             </Grid>
-          </GridItem>
-          <GridItem
-            rowSpan={2}
-            colSpan={1}
-            style={{
-              background: "rgba(255,255,255,0.1)",
-              borderRadius: "50px",
-              boxShadow: "20px 1px 1vw rgba(0, 0, 0, 0.5)",
-            }}
-          >
-            <Taksir taksir={taksir} />
           </GridItem>
         </Grid>
       </div>

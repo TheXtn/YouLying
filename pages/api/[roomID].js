@@ -229,7 +229,7 @@ const SocketHandler = (req, res) => {
         socket.join(data.roomName);
 
         io.to(data.roomName).emit("update-player", selectedRoom.players);
-        if (selectedRoom.players.length == 4) {
+        if (selectedRoom.players.length == 2) {
           updatecurrentPlayer(
             startTheGameMainFunction(
               socket,
