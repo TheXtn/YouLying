@@ -34,9 +34,7 @@ export default function sample3D() {
             renderer.render(scene,camera)
         }
 
-        //adding grid to the screen
-        const gridHelper = new THREE.GridHelper(200,50)
-        scene.add(gridHelper)
+        
 
         //adding background stars
         function addStar(){
@@ -71,7 +69,7 @@ export default function sample3D() {
         const ringTexture2 = new THREE.TextureLoader().load('/rings2.png')
         const ring2 = new THREE.Mesh( 
           new THREE.RingGeometry( 6, 9, 32 ),
-          new THREE.MeshBasicMaterial( {map:ringTexture,side: THREE.DoubleSide} ) 
+          new THREE.MeshBasicMaterial( {map:ringTexture2,side: THREE.DoubleSide} ) 
         );
         scene.add( ring2 );
 
