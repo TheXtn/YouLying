@@ -28,11 +28,11 @@ let socket;
 const rooms = [
   {
     id: 1,
-    name: "Room 1",
+    name: "Room 1 (4 players)",
   },
   {
     id: 1,
-    name: "Room 2",
+    name: "Room 2 (3 players)",
   },
 ];
 export default function Play(props) {
@@ -137,6 +137,7 @@ export default function Play(props) {
     }
   }
   function play() {
+    if ()
     if (id === "") {
       toast.closeAll;
       toast({
@@ -302,6 +303,7 @@ export default function Play(props) {
                 </Heading>
                 <div style={{ textAlign: "center" }}>
                   <Select
+
                     placeholder="Select a room"
                     onChange={(event) => {
                       setSelectedRoom(event.target.value);

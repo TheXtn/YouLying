@@ -64,6 +64,7 @@ export let rooms = [
     table: [],
     leaderBoard: [],
     currentPlayer: null,
+    requiredPlayers:4
   },
   {
     id: 2,
@@ -74,6 +75,7 @@ export let rooms = [
     table: [],
     leaderBoard: [],
     currentPlayer: null,
+    requiredPlayers:3
   },
 ];
 export let allPlayers = [];
