@@ -137,7 +137,6 @@ export default function Play(props) {
     }
   }
   function play() {
-    if ()
     if (id === "") {
       toast.closeAll;
       toast({
