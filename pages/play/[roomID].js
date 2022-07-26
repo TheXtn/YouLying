@@ -14,6 +14,7 @@ import {
   Button,
   Box,
   Text,
+  Select,
 } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
 import ReactHowler from "react-howler";
@@ -300,7 +301,7 @@ export default function Play(props) {
                   Welcome to local room
                 </Heading>
                 <div style={{ textAlign: "center" }}>
-                  <select
+                  <Select
                     placeholder="Select a room"
                     onChange={(event) => {
                       setSelectedRoom(event.target.value);
@@ -313,7 +314,7 @@ export default function Play(props) {
                         </option>
                       );
                     })}
-                  </select>
+                  </Select>
                   <Text>
                     <b style={{ fontSize: "1.5rem", color: "white" }}>
                       Nickname
