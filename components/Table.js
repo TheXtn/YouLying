@@ -28,10 +28,10 @@ export default function Table(props){
         <VStack w="full" h={"full"} p={10} spacing={10} alignItems={"center"} >
         {table?.length>0 ? <div style={{fontSize:'20px',color:'white'}}>{table[table.length-1].player_name}</div>:<></>}
         {table?.length==1 && <Image src={cardOnTable} width={120} height={80} />}
-        {table?.length==2 && table[table.length-1].player_name==table[table.length-2].player_name  ?<Image src={'/../public/2 cards side.png'} width={120} height={80} /> :<></>}
+        {table?.length==2 && table[table.length-1].player_name==table[table.length-2].player_name  ?<Image src={'/2 cards side.png'} width={120} height={80} /> :<></>}
         {table?.length>1 && table[table.length-1].player_name!=table[table.length-2].player_name  ?<Image src={cardOnTable} width={120} height={80} /> :<></>}
-        {table?.length>2 && table[table.length-1].player_name==table[table.length-2].player_name && table[table.length-2].player_name!=table[table.length-3].player_name ? <Image src={'/../public/2 cards side.png'} width={120} height={80} />:<></>}
-        {table?.length>2 && table[table.length-1].player_name==table[table.length-2].player_name && table[table.length-2].player_name==table[table.length-3].player_name ? <Image src={'/../public/3 cards side.png'} width={120} height={80} />:<></>}
+        {table?.length>2 && table[table.length-1].player_name==table[table.length-2].player_name && table[table.length-2].player_name!=table[table.length-3].player_name ? <Image src={'/2 cards side.png'} width={120} height={80} />:<></>}
+        {table?.length>2 && table[table.length-1].player_name==table[table.length-2].player_name && table[table.length-2].player_name==table[table.length-3].player_name ? <Image src={'/3 cards side.png'} width={120} height={80} />:<></>}
 
         {(table?.length>0) && props.win==false && <Button  colorScheme={"teal"} onClick={() => sleep(0).then(() => {props.lie(table[table.length-1]);
         props.setcardstoplay([])
