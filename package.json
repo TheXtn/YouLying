@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@andyet/simplewebrtc": "^1.30.5",
+    "@chakra-ui/icons": "^2.0.4",
     "@chakra-ui/react": "^2.2.4",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -18,6 +19,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-howler": "^5.2.0",
+    "react-icons": "^4.4.0",
     "sass": "^1.53.0",
     "socket.io": "^4.5.1",
     "socket.io-client": "^4.5.1"

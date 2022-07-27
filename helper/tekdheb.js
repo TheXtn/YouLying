@@ -77,6 +77,50 @@ export let rooms = [
     currentPlayer: null,
     requiredPlayers:3
   },
+  {
+    id: 3,
+    name: "Room 3",
+    cards: [...cards],
+    brokenCards: [],
+    players: [],
+    table: [],
+    leaderBoard: [],
+    currentPlayer: null,
+    requiredPlayers:2
+  },
+  {
+    id: 4,
+    name: "Room 4",
+    cards: [...cards],
+    brokenCards: [],
+    players: [],
+    table: [],
+    leaderBoard: [],
+    currentPlayer: null,
+    requiredPlayers:5
+  },
+  {
+    id: 5,
+    name: "Room 5",
+    cards: [...cards],
+    brokenCards: [],
+    players: [],
+    table: [],
+    leaderBoard: [],
+    currentPlayer: null,
+    requiredPlayers:6
+  },
+  {
+    id: 6,
+    name: "Room 6",
+    cards: [...cards],
+    brokenCards: [],
+    players: [],
+    table: [],
+    leaderBoard: [],
+    currentPlayer: null,
+    requiredPlayers:7
+  },
 ];
 export let allPlayers = [];
 

@@ -23,6 +23,7 @@ const SocketHandler = (req, res) => {
     const io = new Server(res.socket.server);
     res.socket.server.io = io;
     io.on("connection", (socket) => {
+      io.emit("allrooms",rooms)
       socket.on("playingTurn", (Cardstoplay, id, selected) => {
         //loop throuch cardstoplay
         // get room name from player in allPlayers with current socket id
@@ -215,6 +216,7 @@ const SocketHandler = (req, res) => {
         socket.emit("update-table", selectedRoom.table);
       });
       socket.on("addplayer", (data) => {
+        
         let player = {
           id: 1,
           name: data.player,
@@ -229,6 +231,7 @@ const SocketHandler = (req, res) => {
         socket.join(data.roomName);
 
         io.to(data.roomName).emit("update-player", selectedRoom.players);
+        io.emit("allrooms",rooms)
         if (selectedRoom.players.length == selectedRoom.requiredPlayers ) {
           updatecurrentPlayer(
             startTheGameMainFunction(
@@ -246,14 +249,18 @@ const SocketHandler = (req, res) => {
       });
       socket.on("disconnect", () => {
         console.log(socket.id + " disconnected");
+       
         //get player from the connectedPlayers
-        if (!allPlayers.map((p) => p.player_id).includes(socket.id)) {
+        if (!allPlayers.map((p) => p.player_id).includes(socket.id) ) {
           return;
         }
 
         let player = allPlayers.find(
           (player) => player.player_id === socket.id
         );
+        let room=rooms.find((r)=>r.name==player.roomName)
+        if (room.players.length==room.requiredPlayers){
+               
         io.to(player.roomName).emit(
           "close-game",
           player.name + " disconnected"
@@ -261,15 +268,31 @@ const SocketHandler = (req, res) => {
 
         //delete player from connected players
         updateconnectedPlayers(
-          allPlayers.filter((player) => player.player_id !== socket.id),
+          room.players.filter((player) => player.player_id !== socket.id),
           player.roomName
         );
-        io.to(player.roomName).emit("update-player", allPlayers);
+        io.to(player.roomName).emit("update-player", room.players);
         updatetable([], player.roomName);
-        allPlayers.map((player) => {
+        room.players.map((player) => {
           socket.disconnect(player.player_id);
         });
         updateconnectedPlayers([], player.roomName);
+        io.emit("allrooms",rooms)
+        }
+        
+        io.to(player.roomName).emit(
+          "logs",
+          player.name + " disconnected"
+        );
+
+        //delete player from connected players
+        updateconnectedPlayers(
+          room.players.filter((player) => player.player_id !== socket.id),
+          player.roomName
+        );
+        io.to(player.roomName).emit("update-player", room.players);
+        updatetable([], player.roomName);
+       
       });
     });
   }

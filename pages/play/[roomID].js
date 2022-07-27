@@ -147,7 +147,7 @@ export default function Play(props) {
         isClosable: true,
       });
     } else {
-      socket.emit("addplayer", { player: id, roomName: selectedRoom });
+      socket.emit("addplayer", { player: id, roomName: roomID });
       setconnectedroom(true);
       const audio = new Audio("https://www.mboxdrive.com/marhbe3asba.mp3");
       audio.play();
@@ -298,24 +298,10 @@ export default function Play(props) {
                 alignItems={"center"}
               >
                 <Heading style={{ textAlign: "center", color: "white" }}>
-                  Welcome to local room
+                  Welcome to {roomID}
                 </Heading>
                 <div style={{ textAlign: "center" }}>
-                  <Select
-                    
-                    placeholder="Select a room"
-                    onChange={(event) => {
-                      setSelectedRoom(event.target.value);
-                    }}
-                  >
-                    {rooms.map((item, index) => {
-                      return (
-                        <option value={item.name} key={index}>
-                          {item.name}
-                        </option>
-                      );
-                    })}
-                  </Select>
+                  
                   <Text>
                     <b style={{ fontSize: "1.5rem", color: "white" }}>
                       Nickname

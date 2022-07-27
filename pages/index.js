@@ -1,63 +1,140 @@
-import { useEffect, useState } from 'react'
+import { Button, Flex, SimpleGrid, Stack,useColorModeValue,chakra, LinkBox } from "@chakra-ui/react";
 import Link from 'next/link'
-import io from 'socket.io-client'
-import styles from '../styles/Custom.module.scss'
-
-let socket;
-
-
-const Home = () => {
-  const [id, setid] = useState('')
-  const [messages,setmessages]=useState([])
-  const [input, setInput] = useState('')
-  useEffect(() => {socketInitializer()}, [])
-
-  const socketInitializer = async () => {
-    await fetch('/api/socket');
-    socket = io()
-
-    socket.on('connect', () => {
-      console.log('connected')
-    })
-    socket.on('update-input',(msg)=>{
-      setmessages((prev)=>[...prev,msg])
-    })
-  }
-
-  const onChangeHandler = (e) => {
-    setInput(e.target.value)
-    socket.emit('input-change', input)
-  }
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
+let socket
+export default function Home() {
   
-  return (
+  useEffect(()=>{socketInitializer()},[])
+  const [rooms,setrooms]=useState([])
+  const socketInitializer = async () => {
+    await fetch("/api/allrooms");
+    socket = io();
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+    socket.on('allrooms',(res)=>{
+      setrooms(res)
+    })
+
+
+  }
+  const data = [
+    {
+      name: "Room 1",
+      players: 2,
+    },
+    {
+      name: "Room 2",
+      players:4
+    },
     
-    <div className={styles.body}>
-    <div className={styles.selectserver}>
-      <p>Select a room:</p>
-      <p><select value={id} onChange={(e)=>setid(e.target.value)}>
-          <option value=""></option>
-          <option value="LocalRoom">Local room</option>
-      </select></p>
-      <Link href={`/play/${encodeURIComponent(id)}`}><button >Play !</button></Link><br/>
-
-      {messages.map((item)=>{
-        return(
-          <p key={item}>{item}</p>
-        )
-       
-      })}
-      </div>
-      <div className={styles.chatbox}>
-    <input
-      type={"text"}
-      placeholder="Type something"
-      value={input}
-      onChange={(e)=>{setInput(e.target.value)}}
-    />
-    <button onClick={onChangeHandler}>Send message</button>
-    </div>
-    </div>
-  )
-}
-
-export default Home;
+  ];
+  const dataColor = useColorModeValue("white", "gray.800");
+  const bg = useColorModeValue("white", "gray.800");
+  const bg2 = useColorModeValue("gray.100", "gray.700");
+  return (
+    <Flex
+      w="full"
+      bg="#edf3f8"
+      _dark={{
+        bg: "#3e3e3e",
+      }}
+      p={50}
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Stack
+        direction={{
+          base: "column",
+        }}
+        w="full"
+        bg={{
+          md: bg,
+        }}
+        shadow="lg"
+      >
+        {rooms?.map((room, pid) => {
+          return (
+            <Flex
+              direction={{
+                base: "row",
+                md: "column",
+              }}
+              bg={dataColor}
+              key={pid}
+            >
+              <SimpleGrid
+                spacingY={3}
+                columns={{
+                  base: 1,
+                  md: 3,
+                }}
+                w={{
+                  base: 120,
+                  md: "full",
+                }}
+                textTransform="uppercase"
+                bg={bg2}
+                color={"gray.500"}
+                py={{
+                  base: 1,
+                  md: 4,
+                }}
+                px={{
+                  base: 2,
+                  md: 10,
+                }}
+                fontSize="md"
+                fontWeight="hairline"
+              >
+                <span>Name</span>
+                <span>Players</span>
+                <chakra.span
+                  textAlign={{
+                    md: "right",
+                  }}
+                >
+                  Actions
+                </chakra.span>
+              </SimpleGrid>
+              <SimpleGrid
+                spacingY={3}
+                columns={{
+                  base: 1,
+                  md: 3,
+                }}
+                w="full"
+                py={2}
+                px={10}
+                fontWeight="hairline"
+              >
+                <span>{room.name}</span>
+                <chakra.span
+                  textOverflow="ellipsis"
+                  overflow="hidden"
+                  whiteSpace="nowrap"
+                >
+                  {room.players.length}/{room.requiredPlayers} players
+                </chakra.span>
+                <Flex
+                  justify={{
+                    md: "end",
+                  }}
+                >
+                  {room.players.length<room.requiredPlayers?<Link href={'/play/'+room.name}>
+                  <Button variant="solid" colorScheme="red" size="sm">
+                    Join
+                  </Button></Link>:<Button disabled variant="solid" colorScheme="red" size="sm">
+                    Full
+                  </Button>}
+                  
+                </Flex>
+              </SimpleGrid>
+            </Flex>
+          );
+        })}
+      </Stack>
+    </Flex>
+  );
+};
