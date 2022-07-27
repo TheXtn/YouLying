@@ -247,13 +247,14 @@ export function moveTurnToTheNextPlayer(players, currentPlayer, io) {
     let nextPlayer = players[nextPlayerIndex];
     io.to(nextPlayer.player_id).emit("yourTurn");
     let old = currentPlayer;
-    leaderBoard.push(old);
-    io.emit("update-leaderBoard", leaderBoard);
+    let selectedRoom=rooms.find((r)=>(r.name==old.roomName))
+    selectedRoom.leaderBoard.push(old);
+    io.emit("update-leaderBoard", selectedRoom.leaderBoard);
     currentPlayer = nextPlayer;
-    connectedPlayers = connectedPlayers.filter(
+    selectedRoom.players = selectedRoom.players.filter(
       (item) => item.player_id != old.player_id
     );
-    io.emit("update-player", connectedPlayers);
+    io.emit("update-player", selectedRoom.players);
   }
   return currentPlayer;
 }

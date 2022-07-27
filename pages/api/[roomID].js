@@ -176,11 +176,11 @@ const SocketHandler = (req, res) => {
               "logs",
               "Player " + sada9.name + " Won"
             );
-            leaderBoard.push(sada9);
-            io.to(selectedRoom.name).emit("update-leaderBoard", leaderBoard);
+            selectedRoom.leaderBoard.push(sada9);
+            io.to(selectedRoom.name).emit("update-leaderBoard", selectedRoom.leaderBoard);
             io.to(sada9.player_id).emit("update-win");
             updateconnectedPlayers(
-              selectedRoom.players.filter((p) => p.player_id != sada9.player_id)
+              selectedRoom.players.filter((p) => p.player_id != sada9.player_id),selectedRoom.name
             );
           }
           io.to(selectedRoom.name).emit(
