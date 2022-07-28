@@ -292,7 +292,7 @@ const SocketHandler = (req, res) => {
         );
         io.to(player.roomName).emit("update-player", room.players);
         updatetable([], player.roomName);
-       
+        io.emit("allrooms",rooms)
       });
     });
   }
