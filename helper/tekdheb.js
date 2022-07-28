@@ -242,7 +242,7 @@ export function checkTaksir(players, socket, io) {
       }
       if (sameCardsNumber === 3) {
        
-        io.to(player.roomName).emit(
+        socket.to(player.roomName).emit(
           "taksir",
           `${card.value} Tkasrou by ${player.name}`
         );
