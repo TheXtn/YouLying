@@ -1,5 +1,5 @@
 ## TehchyFyh
-Online card game.
-Stack: NodeJS,NextJS,WebSockets
-https://tehchyfyh.herokuapp.com
+Online card game. /n
+Stack: NodeJS,NextJS,WebSockets /n
+https://tehchyfyh.herokuapp.com /n
 
