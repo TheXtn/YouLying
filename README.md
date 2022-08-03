@@ -1,5 +1,5 @@
 # TehchyFyh
--Online card game.
+-Online cards game.
 
 -Stack: NodeJS,NextJS,WebSockets.
 
