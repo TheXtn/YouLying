@@ -73,7 +73,7 @@ export default function RoomSelector() {
               </SimpleGrid>
         {rooms?.map((room, pid) => {
           return (
-            <div>
+            <div key={pid}>
               
               <SimpleGrid
                 columns={{
