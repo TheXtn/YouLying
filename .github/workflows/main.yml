@@ -1,6 +1,7 @@
 name: final
 
 on:
+  workflow_dispatch:
   push:
     tags: ["v*.*.*"]
 
